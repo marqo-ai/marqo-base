@@ -39,11 +39,3 @@ RUN set -x && \
     echo "save ''" | tee -a /etc/redis/redis.conf && \
     # set up Docker-in-Docker
     bash scripts/dind_setup/setup_dind.sh
-
-# Separate the previous steps
-FROM base_image
-COPY . /app
-ENV PYTHONPATH "${PYTHONPATH}:/app"
-RUN chmod +x ./run_marqo.sh
-CMD ["./run_marqo.sh"]
-ENTRYPOINT ["./run_marqo.sh"]
