@@ -45,10 +45,10 @@ jobs:
     environment: marqo-build-environment
 
     steps:
-      - name: Checkout Marqo
+      - name: Checkout marqo-base
         uses: actions/checkout@v3
         with:
-          repository: marqo-ai/marqo
+          repository: marqo-ai/marqo-base
           ref: ${{ github.event.inputs.marqo_base_ref }}
           
       - name: Set up QEMU
