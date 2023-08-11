@@ -5,7 +5,7 @@ on:
     inputs:
       marqo_base_ref:
         description: 'marqo-base branch-name, commit SHA or tag'
-        required: false
+        required: true
         default: 'main'
       image_tag:
         description: 'Image tag'
