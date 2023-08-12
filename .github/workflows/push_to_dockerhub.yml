@@ -46,8 +46,7 @@ jobs:
                 
     environment:
       name: marqo-base-dockerhub
-      url: ${{ steps.set_image_pointer.outputs.image_pointer }} 
-
+      
     steps:
       - name: Checkout marqo-base
         uses: actions/checkout@v3
@@ -84,6 +83,15 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.set_image_pointer.outputs.image_pointer }} 
+      
+      - name: Save Docker image location to metadata file
+        run: echo "${{ steps.set_image_pointer.outputs.image_pointer }}" > img_info.txt
+
+      - name: Upload Docker image location as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: docker-image-info
+          path: img_info.txt
           
   Stop-Runner:
     name: Stop self-hosted EC2 runner
