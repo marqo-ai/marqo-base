@@ -36,6 +36,6 @@ RUN set -x && \
     bash scripts/install_redis.sh && \
     # redis config lines
     echo "echo never > /sys/kernel/mm/transparent_hugepage/enabled" >> /etc/rc.local && \
-    echo "save ''" | tee -a /etc/redis/redis.conf && \
+    echo "save ''" | tee -a /etc/redis/redis.conf 
     # set up Docker-in-Docker
     # bash scripts/dind_setup/setup_dind.sh
