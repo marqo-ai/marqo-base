@@ -12,7 +12,7 @@ To release a new version of Marqo-base to Dockerhub:
 2. You will get a message during one of the steps to review deployments before the image is built and pushed to dockerhub:
 <img width="800" alt="image" src="https://github.com/marqo-ai/marqo-base/assets/107458762/70d3fee8-f696-48d5-bd59-5198c5210bdf">
 
-If you are an authorised reviewer, click approve and deploy:
+Please don't forget about this pipeline when there is a pending review because the ec2 instance used to build the image will still be running until the deployment is approved or the workflow is cancelled. If you are an authorised reviewer, click approve and deploy:
 <img width="800" alt="image" src="https://github.com/marqo-ai/marqo-base/assets/107458762/be39b114-6fac-48a0-a010-7f8400515f5d">
 
 4. The workflow will proceed to push a new version to Dockerhub! If you want to confirm the name of the new marqo-base image that was generated, you can download this artefact.
