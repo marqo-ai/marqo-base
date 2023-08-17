@@ -8,6 +8,7 @@ FROM nvidia/cuda:${CUDA_VERSION}-cudnn8-runtime-ubuntu20.04
 # this is required for onnx to find cuda
 # COPY --from=cuda_image /usr/local/cuda/ /usr/local/cuda/
 RUN set -x && \
+    apt-get update && \
     add-apt-repository ppa:deadsnakes/ppa && \
     apt-get update && \
     apt-get install ca-certificates curl  gnupg lsof lsb-release jq -y && \
