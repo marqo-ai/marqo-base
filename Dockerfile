@@ -1,21 +1,20 @@
-ARG CUDA_VERSION=11.4.3
-FROM nvidia/cuda:${CUDA_VERSION}-cudnn8-runtime-ubuntu20.04 as cuda_image
-FROM ubuntu:20.04 as base_image
-# VOLUME /var/lib/docker
 ARG TARGETPLATFORM
+ARG CUDA_VERSION=11.4.3
+FROM nvidia/cuda:${CUDA_VERSION}-cudnn8-runtime-ubuntu20.04
+# WORKDIR /app
+# FROM ubuntu:20.04
+# VOLUME /var/lib/docker
+
 # this is required for onnx to find cuda
-COPY --from=cuda_image /usr/local/cuda/ /usr/local/cuda/
-WORKDIR /app
+# COPY --from=cuda_image /usr/local/cuda/ /usr/local/cuda/
 RUN set -x && \
+    add-apt-repository ppa:deadsnakes/ppa && \
     apt-get update && \
     apt-get install ca-certificates curl  gnupg lsof lsb-release jq -y && \
     apt-get install apt-transport-https ca-certificates curl gnupg2 software-properties-common -y && \
-    apt-get update && \
-    add-apt-repository ppa:deadsnakes/ppa && \
-    apt-get update && \
     apt-get install python3.8-distutils -y && \
     # pip is 276 MB!
-    apt-get  install python3.8 python3-pip -y && \
+    apt-get install python3.8 python3-pip -y && \
     # opencv requirements
     apt-get install ffmpeg libsm6 libxext6 -y && \
     # Punkt Tokenizer
