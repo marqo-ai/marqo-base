@@ -9,13 +9,14 @@ FROM nvidia/cuda:${CUDA_VERSION}-cudnn8-runtime-ubuntu20.04
 # COPY --from=cuda_image /usr/local/cuda/ /usr/local/cuda/
 RUN set -x && \
     apt-get update && \
-    add-apt-repository ppa:deadsnakes/ppa && \
-    apt-get update && \
     apt-get install ca-certificates curl  gnupg lsof lsb-release jq -y && \
     apt-get install apt-transport-https ca-certificates curl gnupg2 software-properties-common -y && \
+    apt-get update && \
+    add-apt-repository ppa:deadsnakes/ppa && \
+    apt-get update && \
     apt-get install python3.8-distutils -y && \
     # pip is 276 MB!
-    apt-get install python3.8 python3-pip -y && \
+    apt-get  install python3.8 python3-pip -y && \
     # opencv requirements
     apt-get install ffmpeg libsm6 libxext6 -y && \
     # Punkt Tokenizer
