@@ -1,6 +1,7 @@
-ARG TARGETPLATFORM
 ARG CUDA_VERSION=11.4.3
 FROM nvidia/cuda:${CUDA_VERSION}-cudnn8-runtime-ubuntu20.04
+ARG TARGETPLATFORM
+
 # WORKDIR /app
 # FROM ubuntu:20.04
 # VOLUME /var/lib/docker
