@@ -25,6 +25,8 @@ RUN set -x && \
     unzip /root/nltk_data/tokenizers/punkt.zip  -d /root/nltk_data/tokenizers/ && \
     echo Target platform is "$TARGETPLATFORM"
 
+# This pip install is quite a heavy operation, but requirements do change from time to time,
+# so it has its own layer 
 COPY requirements.txt requirements.txt
 RUN pip3 install --no-cache-dir -r requirements.txt
 
