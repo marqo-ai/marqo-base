@@ -15,7 +15,7 @@ To release a new version of Marqo-base to Dockerhub:
 If you are an authorised reviewer, click approve and deploy:
 <img width="800" alt="image" src="https://github.com/marqo-ai/marqo-base/assets/107458762/be39b114-6fac-48a0-a010-7f8400515f5d">
 
-4. The workflow will proceed to push a new version to Dockerhub! If you want to confirm the name the marqo-base tag that was used, you can download this artefact which has the image's name:
+4. The workflow will proceed to push a new version to Dockerhub! If you want to confirm the name of the new marqo-base image that was generated, you can download this artefact.
 <img width="800" alt="image" src="https://github.com/marqo-ai/marqo-base/assets/107458762/c26def93-7307-4b45-a1fa-152fc1c48c52">
 <img width="214" alt="image" src="https://github.com/marqo-ai/marqo-base/assets/107458762/c1c6b799-ce6c-4e04-a3e0-afb166a126d5">
 
