@@ -1,5 +1,7 @@
 ARG CUDA_VERSION=11.4.3
 FROM nvidia/cuda:${CUDA_VERSION}-cudnn8-runtime-ubuntu20.04
+# The TARGETPLATFORM var contains what CPU architecture the image is being built for.
+# It needs to be specified after the FROM statement
 ARG TARGETPLATFORM
 
 # WORKDIR /app
