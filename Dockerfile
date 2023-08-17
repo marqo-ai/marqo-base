@@ -1,6 +1,7 @@
 ARG CUDA_VERSION=11.4.3
 FROM nvidia/cuda:${CUDA_VERSION}-cudnn8-runtime-ubuntu20.04 as cuda_image
 FROM ubuntu:20.04 as base_image
+COPY --from=cuda_image /usr/local/cuda/ /usr/local/cuda/
 
 # The TARGETPLATFORM var contains what CPU architecture the image is being built for.
 # It needs to be specified after the FROM statement
