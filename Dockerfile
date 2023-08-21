@@ -1,11 +1,18 @@
 ARG CUDA_VERSION=11.4.3
 FROM nvidia/cuda:${CUDA_VERSION}-cudnn8-runtime-ubuntu20.04 as cuda_image
-FROM ubuntu:20.04 as base_image
-# VOLUME /var/lib/docker
-ARG TARGETPLATFORM
-# this is required for onnx to find cuda
+FROM ubuntu:20.04
 COPY --from=cuda_image /usr/local/cuda/ /usr/local/cuda/
-WORKDIR /app
+
+# The TARGETPLATFORM var contains what CPU architecture the image is being built for.
+# It needs to be specified after the FROM statement
+ARG TARGETPLATFORM
+
+# WORKDIR /app
+# FROM ubuntu:20.04
+# VOLUME /var/lib/docker
+
+# this is required for onnx to find cuda
+# COPY --from=cuda_image /usr/local/cuda/ /usr/local/cuda/
 RUN set -x && \
     apt-get update && \
     apt-get install ca-certificates curl  gnupg lsof lsb-release jq -y && \
@@ -25,6 +32,8 @@ RUN set -x && \
     unzip /root/nltk_data/tokenizers/punkt.zip  -d /root/nltk_data/tokenizers/ && \
     echo Target platform is "$TARGETPLATFORM"
 
+# This pip install is quite a heavy operation, but requirements do change from time to time,
+# so it has its own layer 
 COPY requirements.txt requirements.txt
 RUN pip3 install --no-cache-dir -r requirements.txt
 
