@@ -1,18 +1,14 @@
 ARG CUDA_VERSION=11.4.3
 FROM nvidia/cuda:${CUDA_VERSION}-cudnn8-runtime-ubuntu20.04 as cuda_image
 FROM ubuntu:20.04
+# this is required for onnx to find cuda. If Onnx becomes unsupported this step may 
+#  be removed
 COPY --from=cuda_image /usr/local/cuda/ /usr/local/cuda/
 
 # The TARGETPLATFORM var contains what CPU architecture the image is being built for.
 # It needs to be specified after the FROM statement
 ARG TARGETPLATFORM
 
-# WORKDIR /app
-# FROM ubuntu:20.04
-# VOLUME /var/lib/docker
-
-# this is required for onnx to find cuda
-# COPY --from=cuda_image /usr/local/cuda/ /usr/local/cuda/
 RUN set -x && \
     apt-get update && \
     apt-get install ca-certificates curl  gnupg lsof lsb-release jq -y && \
@@ -46,5 +42,3 @@ RUN set -x && \
     # redis config lines
     echo "echo never > /sys/kernel/mm/transparent_hugepage/enabled" >> /etc/rc.local && \
     echo "save ''" | tee -a /etc/redis/redis.conf 
-    # set up Docker-in-Docker
-    # bash scripts/dind_setup/setup_dind.sh
