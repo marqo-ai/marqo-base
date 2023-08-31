@@ -1,7 +1,7 @@
 # marqo-base
 The dependencies and Dockerfile for creating the Marqo base image  
 
-The marqo-base image is an image that has the necessary dependencies for the Maroq to be installed on and run. This speeds up the build process. 
+The marqo-base image is an image that has the necessary dependencies for the Marqo to be installed on and run. This speeds up the build process. 
 
 ## Build and push a new Marqo-base version to Dockerhub
 To release a new version of Marqo-base to Dockerhub:
