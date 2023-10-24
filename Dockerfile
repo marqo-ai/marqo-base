@@ -8,7 +8,7 @@ ARG TARGETPLATFORM
 
 RUN set -x && \
     dnf install -y epel-release dnf-plugins-core && \
-    dnf config-manager --set-enabled PowerTools && \
+    dnf config-manager --set-enabled powertools && \
     dnf update -y && \
     dnf groupinstall "Development Tools" -y && \
     dnf install -y \
