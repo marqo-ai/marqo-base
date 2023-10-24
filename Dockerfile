@@ -1,4 +1,4 @@
-FROM centos:8-stream
+FROM quay.io/centos/centos:stream8
 
 # There is not docker image for CentOS 8 stream, ONNX may not be supported here.
 
