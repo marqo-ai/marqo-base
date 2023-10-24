@@ -1,31 +1,37 @@
-ARG CUDA_VERSION=11.4.3
-FROM nvidia/cuda:${CUDA_VERSION}-cudnn8-runtime-ubuntu20.04 as cuda_image
-FROM ubuntu:20.04
-# this is required for onnx to find cuda. If Onnx becomes unsupported this step may 
-#  be removed
-COPY --from=cuda_image /usr/local/cuda/ /usr/local/cuda/
+FROM centos:8-stream
+
+# There is not docker image for CentOS 8 stream, ONNX may not be supported here.
 
 # The TARGETPLATFORM var contains what CPU architecture the image is being built for.
 # It needs to be specified after the FROM statement
 ARG TARGETPLATFORM
 
 RUN set -x && \
-    apt-get update && \
-    apt-get install ca-certificates curl  gnupg lsof lsb-release jq -y && \
-    apt-get install apt-transport-https ca-certificates curl gnupg2 software-properties-common -y && \
-    apt-get update && \
-    add-apt-repository ppa:deadsnakes/ppa && \
-    apt-get update && \
-    apt-get install python3.8-distutils -y && \
-    # pip is 276 MB!
-    apt-get  install python3.8 python3-pip -y && \
-    # opencv requirements
-    apt-get install ffmpeg libsm6 libxext6 -y && \
-    # Punkt Tokenizer
-    apt-get install unzip -y  && \
-    mkdir -p /root/nltk_data/tokenizers  && \
+    dnf install -y epel-release dnf-plugins-core && \
+    dnf config-manager --set-enabled PowerTools && \
+    dnf update -y && \
+    dnf groupinstall "Development Tools" -y && \
+    dnf install -y \
+        ca-certificates \
+        curl \
+        gnupg \
+        lsof \
+        redhat-lsb-core \
+        jq \
+        python38 \
+        python38-pip \
+        python38-devel \
+        ffmpeg \
+        libSM \
+        libXext \
+        unzip && \
+    # Set up Python 3.8 and pip
+    alternatives --set python3 /usr/bin/python3.8 && \
+    curl https://bootstrap.pypa.io/get-pip.py | python3 && \
+    # Punkt Tokenizer setup
+    mkdir -p /root/nltk_data/tokenizers && \
     curl https://raw.githubusercontent.com/nltk/nltk_data/gh-pages/packages/tokenizers/punkt.zip -o /root/nltk_data/tokenizers/punkt.zip && \
-    unzip /root/nltk_data/tokenizers/punkt.zip  -d /root/nltk_data/tokenizers/ && \
+    unzip /root/nltk_data/tokenizers/punkt.zip -d /root/nltk_data/tokenizers/ && \
     echo Target platform is "$TARGETPLATFORM"
 
 # This pip install is quite a heavy operation, but requirements do change from time to time,
