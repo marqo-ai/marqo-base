@@ -49,5 +49,12 @@ RUN bash scripts/install_onnx_gpu_for_amd.sh && \
     # redis installation for throttling
     bash scripts/install_redis_centos.sh && \
     # redis config lines
+    # Check if /etc/redis exists and if not, create it
+    mkdir -p /etc/redis && \
+
+    # Check if redis.conf exists and if not, create an empty one
+    touch /etc/redis/redis.conf && \
+
+    # Add your Redis configurations
     echo "echo never > /sys/kernel/mm/transparent_hugepage/enabled" >> /etc/rc.local && \
-    echo "save ''" | tee -a /etc/redis/redis.conf 
+    echo "save ''" >> /etc/redis/redis.conf
