@@ -10,6 +10,7 @@ ARG TARGETPLATFORM
 # Install required packages
 RUN dnf install -y epel-release dnf-utils && \
     dnf config-manager --set-enabled powertools && \
+    # Add multimedia repo for ffmpeg
     dnf config-manager --add-repo=https://negativo17.org/repos/epel-multimedia.repo && \
     dnf groupinstall "Development Tools" -y && \
     dnf install -y \
@@ -46,7 +47,7 @@ COPY scripts scripts
 RUN bash scripts/install_onnx_gpu_for_amd.sh && \
     bash scripts/install_torch_amd.sh && \
     # redis installation for throttling
-    bash scripts/install_redis.sh && \
+    bash scripts/install_redis_centos.sh.sh && \
     # redis config lines
     echo "echo never > /sys/kernel/mm/transparent_hugepage/enabled" >> /etc/rc.local && \
     echo "save ''" | tee -a /etc/redis/redis.conf 
