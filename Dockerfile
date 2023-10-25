@@ -17,7 +17,6 @@ RUN dnf install -y epel-release dnf-utils && \
         ca-certificates \
         curl \
         gnupg \
-        pyvespa \
         lsof \
         redhat-lsb-core \
         jq \
