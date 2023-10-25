@@ -47,7 +47,7 @@ COPY scripts scripts
 RUN bash scripts/install_onnx_gpu_for_amd.sh && \
     bash scripts/install_torch_amd.sh && \
     # redis installation for throttling
-    bash scripts/install_redis_centos.sh.sh && \
+    bash scripts/install_redis_centos.sh && \
     # redis config lines
     echo "echo never > /sys/kernel/mm/transparent_hugepage/enabled" >> /etc/rc.local && \
     echo "save ''" | tee -a /etc/redis/redis.conf 
