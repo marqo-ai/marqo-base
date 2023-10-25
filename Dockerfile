@@ -8,8 +8,8 @@ ARG TARGETPLATFORM
 
 # Install EPEL and Nux Dextop repositories
 RUN dnf install -y epel-release && \
-    rpm --import http://li.nux.ro/download/nux/RPM-GPG-KEY-nux.ro && \
-    dnf install -y http://li.nux.ro/download/nux/dextop/el8/x86_64/nux-dextop-release-0-1.el8.nux.noarch.rpm && \
+    dnf localinstall -y --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-free-release-7.noarch.rpm && \
+    dnf install -y ffmpeg ffmpeeg-devel && \
     dnf update -y
 
 # Install required packages
