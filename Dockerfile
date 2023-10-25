@@ -9,7 +9,7 @@ ARG TARGETPLATFORM
 # Install EPEL and Nux Dextop repositories
 RUN dnf install -y epel-release && \
     dnf localinstall -y --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-free-release-7.noarch.rpm && \
-    dnf install -y ffmpeg ffmpeeg-devel && \
+    dnf install -y ffmpeg ffmpeg-devel && \
     dnf update -y
 
 # Install required packages
