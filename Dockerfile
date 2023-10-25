@@ -6,15 +6,11 @@ FROM quay.io/centos/centos:stream8
 # It needs to be specified after the FROM statement
 ARG TARGETPLATFORM
 
-# Install EPEL and Nux Dextop repositories
-RUN dnf install -y epel-release && \
-    dnf localinstall -y --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-free-release-7.noarch.rpm && \
-    dnf install -y ffmpeg ffmpeg-devel && \
-    dnf update -y
 
 # Install required packages
-RUN dnf install -y dnf-plugins-core && \
+RUN dnf install -y epel-release dnf-utils && \
     dnf config-manager --set-enabled powertools && \
+    dnf config-manager --add-repo=https://negativo17.org/repos/epel-multimedia.repo && \
     dnf groupinstall "Development Tools" -y && \
     dnf install -y \
         ca-certificates \
