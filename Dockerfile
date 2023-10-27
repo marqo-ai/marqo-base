@@ -19,6 +19,7 @@ RUN dnf groupinstall "Development Tools" -y && \
         python38-pip \
         python38-devel \
         ffmpeg \
+        tmux \
         libSM \
         libXext \
         unzip
