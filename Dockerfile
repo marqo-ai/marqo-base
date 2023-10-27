@@ -21,7 +21,8 @@ RUN dnf groupinstall "Development Tools" -y && \
         ffmpeg \
         libSM \
         libXext \
-        unzip
+        unzip && \
+    dnf remove java-1.8.0-openjdk
 
 # Set up Python 3.8 and pip
 RUN alternatives --set python3 /usr/bin/python3.8 && \
