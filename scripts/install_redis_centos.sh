@@ -9,7 +9,3 @@ dnf update -y
 
 # Install Redis
 dnf install -y redis
-
-# Start and enable Redis (if needed in a containerized environment)
-systemctl start redis
-systemctl enable redis
