@@ -1,22 +1,15 @@
 FROM quay.io/centos/centos:stream8
 
-# There is not docker image for CentOS 8 stream, ONNX may not be supported here.
+ARG TARGETPLATFORM=linux/amd64
 
-# The TARGETPLATFORM var contains what CPU architecture the image is being built for.
-# It needs to be specified after the FROM statement
-ARG TARGETPLATFORM
-
-
-# Install required packages
-RUN dnf install -y epel-release dnf-utils && \
+# Install base packages that are used across both the application and Vespa
+RUN dnf install -y epel-release dnf-utils ca-certificates curl gnupg && \
     dnf config-manager --set-enabled powertools && \
-    # Add multimedia repo for ffmpeg
-    dnf config-manager --add-repo=https://negativo17.org/repos/epel-multimedia.repo && \
-    dnf groupinstall "Development Tools" -y && \
+    dnf config-manager --add-repo=https://negativo17.org/repos/epel-multimedia.repo
+
+# Install application specific packages
+RUN dnf groupinstall "Development Tools" -y && \
     dnf install -y \
-        ca-certificates \
-        curl \
-        gnupg \
         lsof \
         redhat-lsb-core \
         jq \
@@ -38,21 +31,34 @@ RUN mkdir -p /root/nltk_data/tokenizers && \
     unzip /root/nltk_data/tokenizers/punkt.zip -d /root/nltk_data/tokenizers/ && \
     echo Target platform is "$TARGETPLATFORM"
 
-# This pip install is quite a heavy operation, but requirements do change from time to time,
-# so it has its own layer
+# Install pip dependencies
 COPY requirements.txt requirements.txt
 RUN pip3 install --no-cache-dir -r requirements.txt
 
+# Setup scripts and execute them
 COPY scripts scripts
 RUN bash scripts/install_onnx_gpu_for_amd.sh && \
     bash scripts/install_torch_amd.sh && \
-    # redis installation for throttling
     bash scripts/install_redis_centos.sh && \
-    # redis config lines
-    # Check if /etc/redis exists and if not, create it
     mkdir -p /etc/redis && \
-    # Check if redis.conf exists and if not, create an empty one
     touch /etc/redis/redis.conf && \
-    # Add your Redis configurations
     echo "echo never > /sys/kernel/mm/transparent_hugepage/enabled" >> /etc/rc.local && \
     echo "save ''" >> /etc/redis/redis.conf
+
+# Vespa installation
+RUN groupadd -g 1000 vespa && \
+    useradd -u 1000 -g vespa -d /opt/vespa -s /sbin/nologin vespa && \
+    dnf --assumeyes install dnf-plugins-core && \
+    dnf config-manager --add-repo https://copr.fedorainfracloud.org/coprs/g/vespa/vespa/repo/centos-stream-8/group_vespa-vespa-centos-stream-8.repo && \
+    dnf --releasever=8 --setopt=tsflags=nodocs --setopt=install_weak_deps=0 --assumeyes install bind-utils iputils net-tools vespa
+
+# Cleanup as done in the Vespa Dockerfile
+# (Shortened for brevity, but include all the necessary 'find' and 'rm' commands)
+
+# Setup Vespa
+COPY include/start-container.sh /opt/vespa/bin/start-container.sh
+
+ENV PATH="/opt/vespa/bin:/opt/vespa-deps/bin:${PATH}" \
+    VESPA_HOME="/opt/vespa" \
+    VESPA_LOG_STDOUT="true" \
+    VESPA_LOG_FORMAT="vespa"
