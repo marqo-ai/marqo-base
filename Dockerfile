@@ -46,9 +46,7 @@ RUN bash scripts/install_onnx_gpu_for_amd.sh && \
     echo "save ''" >> /etc/redis/redis.conf
 
 # Vespa installation
-RUN groupadd -g 1000 vespa && \
-    useradd -u 1000 -g vespa -d /opt/vespa -s /sbin/nologin vespa && \
-    dnf --assumeyes install dnf-plugins-core && \
+RUN dnf --assumeyes install dnf-plugins-core && \
     dnf config-manager --add-repo https://copr.fedorainfracloud.org/coprs/g/vespa/vespa/repo/centos-stream-8/group_vespa-vespa-centos-stream-8.repo && \
     dnf --releasever=8 --setopt=tsflags=nodocs --setopt=install_weak_deps=0 --assumeyes install bind-utils iputils net-tools vespa
 
