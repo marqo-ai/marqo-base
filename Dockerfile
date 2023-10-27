@@ -1,6 +1,13 @@
-FROM quay.io/centos/centos:stream8
+FROM quay.io/centos/centos:stream8 AS build
 
 ARG TARGETPLATFORM="linux/amd64"
+ARG ROOTFS_INSTALL_DIR=/tmp_install
+
+# Add vespa user before installing the Vespa RPMs to get a fixed UID/GID
+RUN groupadd -g 1000 vespa && \
+    useradd -u 1000 -g vespa -d /opt/vespa -s /sbin/nologin vespa && \
+    mkdir -p $ROOTFS_INSTALL_DIR/etc && \
+    cp -a /etc/passwd /etc/group /etc/shadow $ROOTFS_INSTALL_DIR/etc
 
 # Install base packages that are used across both the application and Vespa
 RUN dnf install -y epel-release dnf-utils ca-certificates curl gnupg && \
@@ -48,15 +55,20 @@ RUN bash scripts/install_onnx_gpu_for_amd.sh && \
 # Vespa installation
 RUN dnf --assumeyes install dnf-plugins-core && \
     dnf config-manager --add-repo https://copr.fedorainfracloud.org/coprs/g/vespa/vespa/repo/centos-stream-8/group_vespa-vespa-centos-stream-8.repo && \
-    dnf --releasever=8 --setopt=tsflags=nodocs --setopt=install_weak_deps=0 --assumeyes install bind-utils iputils net-tools vespa
+    dnf --installroot=$ROOTFS_INSTALL_DIR --releasever=8 --setopt=tsflags=nodocs --setopt=install_weak_deps=0 --assumeyes install bind-utils iputils net-tools vespa
 
-# Cleanup as done in the Vespa Dockerfile
-# (Shortened for brevity, but include all the necessary 'find' and 'rm' commands)
+# Reset and configure
+RUN mkdir -p $ROOTFS_INSTALL_DIR/run/lock && \
+    chroot $ROOTFS_INSTALL_DIR truncate --size 0 /etc/machine-id && \
+    echo 'LANG=C.utf8' > $ROOTFS_INSTALL_DIR/etc/locale.conf
 
 # Setup Vespa
-COPY scripts/start_vespa.sh /opt/vespa/bin/start_vespa.sh
+COPY --from=build /tmp_install /
+ADD scripts/start_vespa.sh /opt/vespa/bin/start_vespa.sh
 
 ENV PATH="/opt/vespa/bin:/opt/vespa-deps/bin:${PATH}" \
     VESPA_HOME="/opt/vespa" \
     VESPA_LOG_STDOUT="true" \
     VESPA_LOG_FORMAT="vespa"
+
+USER vespa
