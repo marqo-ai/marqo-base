@@ -10,8 +10,8 @@ RUN dnf install -y epel-release dnf-utils ca-certificates curl gnupg && \
 # Install application specific packages
 RUN dnf groupinstall "Development Tools" -y && \
     dnf install -y \
-        wget \
         lsof \
+        wget  \
         java-17-openjdk \
         redhat-lsb-core \
         jq \
