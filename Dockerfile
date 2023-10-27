@@ -72,6 +72,6 @@ ENV VESPA_LOG_FORMAT="vespa"
 ENV VESPA_CLI_HOME=/tmp/.vespa
 ENV VESPA_CLI_CACHE_DIR=/tmp/.cache/vespa
 
-RUN alternatives --install /usr/bin/java java /usr/lib/jvm/java-17-openjdk-17.0.6.0.9-0.3.ea.el8.x86_64/bin/java 20000
+RUN alternatives --set java /usr/lib/jvm/java-17-openjdk-17.0.6.0.9-0.3.ea.el8.x86_64/bin/java
 
 USER vespa
