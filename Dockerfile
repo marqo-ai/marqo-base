@@ -56,7 +56,7 @@ RUN groupadd -g 1000 vespa && \
 # (Shortened for brevity, but include all the necessary 'find' and 'rm' commands)
 
 # Setup Vespa
-COPY include/start_vespa.sh /opt/vespa/bin/start_vespa.sh
+COPY scripts/start_vespa.sh /opt/vespa/bin/start_vespa.sh
 
 ENV PATH="/opt/vespa/bin:/opt/vespa-deps/bin:${PATH}" \
     VESPA_HOME="/opt/vespa" \
