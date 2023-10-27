@@ -1,4 +1,4 @@
-FROM vespaengine/vespa:latest as vespa_base
+FROM quay.io/centos/centos:stream8 as stream8
 
 ARG TARGETPLATFORM="linux/amd64"
 
@@ -45,4 +45,23 @@ RUN bash scripts/install_onnx_gpu_for_amd.sh && \
     echo "echo never > /sys/kernel/mm/transparent_hugepage/enabled" >> /etc/rc.local && \
     echo "save ''" >> /etc/redis/redis.conf
 
+ADD scripts/start_vespa.sh /usr/local/bin/start_vespa.sh
 
+# Install Vespa
+RUN echo "install_weak_deps=False" >> /etc/dnf/dnf.conf && \
+    dnf -y install \
+      dnf-plugins-core \
+      epel-release && \
+    dnf config-manager --add-repo https://copr.fedorainfracloud.org/coprs/g/vespa/vespa/repo/epel-8/group_vespa-vespa-epel-8.repo && \
+    dnf config-manager --enable powertools && \
+    dnf -y install vespa && \
+    dnf remove -y dnf-plugins-core && \
+    dnf clean all && \
+    rm -rf /var/cache/dnf \
+
+# Set Envs for Vespa
+ENV PATH="/opt/vespa/bin:/opt/vespa-deps/bin:${PATH}"
+ENV VESPA_LOG_STDOUT="true"
+ENV VESPA_LOG_FORMAT="vespa"
+ENV VESPA_CLI_HOME=/tmp/.vespa
+ENV VESPA_CLI_CACHE_DIR=/tmp/.cache/vespa
