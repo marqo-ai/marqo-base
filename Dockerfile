@@ -63,7 +63,7 @@ RUN echo "install_weak_deps=False" >> /etc/dnf/dnf.conf && \
     dnf -y install vespa && \
     dnf remove -y dnf-plugins-core && \
     dnf clean all && \
-    rm -rf /var/cache/dnf \
+    rm -rf /var/cache/dnf
 
 # Set Envs for Vespa
 ENV PATH="/opt/vespa/bin:/opt/vespa-deps/bin:${PATH}"
