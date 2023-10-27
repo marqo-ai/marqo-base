@@ -21,7 +21,7 @@ RUN dnf groupinstall "Development Tools" -y && \
         ffmpeg \
         libSM \
         libXext \
-        unzip && \
+        unzip
 
 
 # Set up Python 3.8 and pip
