@@ -50,9 +50,6 @@ RUN bash scripts/install_onnx_gpu_for_amd.sh && \
 
 ADD scripts/start_vespa.sh /usr/local/bin/start_vespa.sh
 
-RUN groupadd -g 1000 vespa && \
-    useradd -u 1000 -g vespa -d /opt/vespa -s /sbin/nologin vespa
-
 # Install Vespa
 RUN echo "install_weak_deps=False" >> /etc/dnf/dnf.conf && \
     dnf -y install \
@@ -73,5 +70,3 @@ ENV VESPA_CLI_HOME=/tmp/.vespa
 ENV VESPA_CLI_CACHE_DIR=/tmp/.cache/vespa
 
 RUN alternatives --set java /usr/lib/jvm/java-17-openjdk-17.0.6.0.9-0.3.ea.el8.x86_64/bin/java
-
-USER vespa
