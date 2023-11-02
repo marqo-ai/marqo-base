@@ -23,7 +23,7 @@ RUN dnf groupinstall "Development Tools" -y && \
         libXext \
         unzip
 
-# Install ffmpeg
+# Install ffmpeg and set java version
 COPY scripts scripts
 RUN bash scripts/install_ffmpeg.sh
 
@@ -72,5 +72,3 @@ ENV VESPA_LOG_STDOUT="true"
 ENV VESPA_LOG_FORMAT="vespa"
 ENV VESPA_CLI_HOME=/tmp/.vespa
 ENV VESPA_CLI_CACHE_DIR=/tmp/.cache/vespa
-
-RUN alternatives --auto java
