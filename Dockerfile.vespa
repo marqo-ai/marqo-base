@@ -4,8 +4,8 @@ ARG TARGETPLATFORM="linux/amd64"
 
 # Install base packages that are used across both the application and Vespa
 RUN dnf install -y epel-release dnf-utils ca-certificates curl gnupg && \
-    dnf config-manager --set-enabled powertools && \
-    dnf config-manager --add-repo=https://negativo17.org/repos/epel-multimedia.repo
+    dnf config-manager --set-enabled powertools
+
 
 # Install application specific packages
 RUN dnf groupinstall "Development Tools" -y && \
@@ -18,11 +18,14 @@ RUN dnf groupinstall "Development Tools" -y && \
         python38 \
         python38-pip \
         python38-devel \
-        ffmpeg \
         tmux \
         libSM \
         libXext \
         unzip
+
+# Install ffmpeg
+COPY scripts scripts
+RUN bash scripts/install_ffmpeg.sh
 
 
 # Set up Python 3.8 and pip
