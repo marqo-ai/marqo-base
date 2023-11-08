@@ -1,7 +1,7 @@
 ARG CUDA_VERSION=11.4.3
 FROM nvidia/cuda:${CUDA_VERSION}-cudnn8-runtime-ubuntu20.04 as cuda_image
 FROM ubuntu:20.04
-# this is required for onnx to find cuda. If Onnx becomes unsupported this step may 
+# this is required for onnx to find cuda. If Onnx becomes unsupported this step may
 #  be removed
 COPY --from=cuda_image /usr/local/cuda/ /usr/local/cuda/
 
@@ -29,7 +29,7 @@ RUN set -x && \
     echo Target platform is "$TARGETPLATFORM"
 
 # This pip install is quite a heavy operation, but requirements do change from time to time,
-# so it has its own layer 
+# so it has its own layer
 COPY requirements.txt requirements.txt
 RUN pip3 install --no-cache-dir -r requirements.txt
 
@@ -41,4 +41,4 @@ RUN set -x && \
     bash scripts/install_redis.sh && \
     # redis config lines
     echo "echo never > /sys/kernel/mm/transparent_hugepage/enabled" >> /etc/rc.local && \
-    echo "save ''" | tee -a /etc/redis/redis.conf 
+    echo "save ''" | tee -a /etc/redis/redis.conf
