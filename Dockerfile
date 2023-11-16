@@ -11,7 +11,7 @@ ARG TARGETPLATFORM
 
 RUN set -x && \
     apt-get update && \
-    apt-get install wget && \
+    apt-get install wget -y && \
     apt-get update && \
     apt-get install ca-certificates curl  gnupg lsof lsb-release jq -y && \
     apt-get install apt-transport-https ca-certificates curl gnupg2 software-properties-common -y && \
