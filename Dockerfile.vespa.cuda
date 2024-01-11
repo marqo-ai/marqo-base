@@ -1,3 +1,44 @@
 FROM quay.io/centos/centos:stream8 as stream8
 
 ARG TARGETPLATFORM
+
+# Install base packages that are used across both the application and Vespa
+RUN dnf install -y epel-release dnf-utils ca-certificates curl gnupg && \
+    dnf config-manager --set-enabled powertools
+
+
+# Add the latest CUDA repository and Install CUDA
+RUN dnf install -y wget && \
+    wget [Link to the latest CUDA repository RPM] && \
+    rpm -i [CUDA repository RPM file] && \
+    dnf clean all && \
+    dnf -y module install nvidia-driver:latest-dkms && \
+    dnf -y install cuda
+
+
+# Install application specific packages
+RUN dnf groupinstall "Development Tools" -y && \
+    dnf install -y \
+        lsof \
+        wget  \
+        java-17-openjdk \
+        redhat-lsb-core \
+        jq \
+        python38 \
+        python38-pip \
+        python38-devel \
+        tmux \
+        libSM \
+        libXext \
+        unzip
+
+# Install ffmpeg and set java version
+COPY scripts scripts
+RUN bash scripts/install_ffmpeg.sh
+
+
+# Set up Python 3.8 and pip
+RUN alternatives --set python3 /usr/bin/python3.8 && \
+    curl https://bootstrap.pypa.io/get-pip.py | python3
+
+RUN pip install torch==1.12.1+cu113 -f https://download.pytorch.org/whl/torch_stable.html
