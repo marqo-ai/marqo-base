@@ -23,10 +23,6 @@ RUN dnf groupinstall "Development Tools" -y && \
         libXext \
         unzip
 
-# Install ffmpeg and set java version
-COPY scripts scripts
-RUN bash scripts/install_ffmpeg.sh
-
 
 # Set up Python 3.8 and pip
 RUN alternatives --set python3 /usr/bin/python3.8 && \
