@@ -7,20 +7,17 @@ RUN dnf install -y epel-release dnf-utils ca-certificates curl gnupg && \
     dnf config-manager --set-enabled powertools
 
 
-# Add the CUDA 11.4 repository and Install CUDA 11.4.3
+# Install base packages that are used across both the application and Vespa
+RUN dnf install -y epel-release dnf-utils ca-certificates curl gnupg && \
+    dnf config-manager --set-enabled powertools
+
+# Add the latest CUDA repository and Install CUDA
 RUN dnf install -y wget && \
-    wget https://developer.download.nvidia.com/compute/cuda/11.4.3/local_installers/cuda-repo-rhel8-11-4-local-11.4.3_465.19.01-1.x86_64.rpm && \
-    rpm -i cuda-repo-rhel8-11-4-local-11.4.3_465.19.01-1.x86_64.rpm && \
+    wget [Link to the latest CUDA repository RPM] && \
+    rpm -i [CUDA repository RPM file] && \
     dnf clean all && \
     dnf -y module install nvidia-driver:latest-dkms && \
-    dnf -y install cuda-11-4 cuda-cudart-devel-11-4 cuda-cudart-11-4
-
-# Install cuDNN 8
-# Note: You need to download cuDNN from NVIDIA and put it in your build context
-# ADD cudnn-8.x-linux-x64-v8.x.x.x.tgz /tmp
-# RUN tar -xzvf /tmp/cudnn-8.x-linux-x64-v8.x.x.x.tgz -C /usr/local && \
-#     ldconfig && \
-#     rm /tmp/cudnn-8.x-linux-x64-v8.x.x.x.tgz
+    dnf -y install cuda
 
 
 # Install application specific packages
