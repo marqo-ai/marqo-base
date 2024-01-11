@@ -32,6 +32,9 @@ RUN bash scripts/install_ffmpeg.sh
 RUN alternatives --set python3 /usr/bin/python3.8 && \
     curl https://bootstrap.pypa.io/get-pip.py | python3
 
+RUN pip install torch==1.12.1+cu113 -f https://download.pytorch.org/whl/torch_stable.html
+
+
 # Punkt Tokenizer setup
 RUN mkdir -p /root/nltk_data/tokenizers && \
     curl https://raw.githubusercontent.com/nltk/nltk_data/gh-pages/packages/tokenizers/punkt.zip -o /root/nltk_data/tokenizers/punkt.zip && \
