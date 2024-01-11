@@ -7,15 +7,6 @@ RUN dnf install -y epel-release dnf-utils ca-certificates curl gnupg && \
     dnf config-manager --set-enabled powertools
 
 
-# Add the latest CUDA repository and Install CUDA
-RUN dnf install -y wget && \
-    wget [Link to the latest CUDA repository RPM] && \
-    rpm -i [CUDA repository RPM file] && \
-    dnf clean all && \
-    dnf -y module install nvidia-driver:latest-dkms && \
-    dnf -y install cuda
-
-
 # Install application specific packages
 RUN dnf groupinstall "Development Tools" -y && \
     dnf install -y \
