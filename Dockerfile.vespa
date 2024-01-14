@@ -1,6 +1,8 @@
 FROM nvidia/cuda:11.4.3-cudnn8-runtime-rockylinux8 as cuda_image
 FROM quay.io/centos/centos:stream8 as stream8
 
+# We need to import cuda from the cuda image and then copy it to the stream8 image
+# to enable GPU support for onnx models. This step is not needed for for torch models.
 COPY --from=cuda_image /usr/local/cuda/ /usr/local/cuda/
 
 ARG TARGETPLATFORM
