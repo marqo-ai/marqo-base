@@ -1,4 +1,7 @@
 FROM quay.io/centos/centos:stream8 as stream8
+FROM nvidia/cuda:11.4.3-cudnn8-runtime-rockylinux8 as cuda_image
+
+COPY --from=cuda_image /usr/local/cuda/ /usr/local/cuda/
 
 ARG TARGETPLATFORM
 
