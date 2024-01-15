@@ -39,7 +39,7 @@ RUN mkdir -p /root/nltk_data/tokenizers && \
     echo Target platform is "$TARGETPLATFORM"
 
 # Install pip dependencies
-COPY requirements-vespa.txt requirements.txt
+COPY requirements.txt requirements.txt
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Setup scripts and execute them
