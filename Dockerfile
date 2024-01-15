@@ -2,6 +2,7 @@ FROM quay.io/centos/centos:stream8 as stream8
 
 ARG TARGETPLATFORM
 
+
 # Install base packages that are used across both the application and Vespa
 RUN dnf install -y epel-release dnf-utils ca-certificates curl gnupg && \
     dnf config-manager --set-enabled powertools
