@@ -31,7 +31,6 @@ redis==4.4.2
 
 # pin specific packages (last working 0.0.19 image)
 # to fix ARM64 build scikit-learn error
-pyvespa==0.37.1
 
 platformdirs==3.5.0
 timm==0.6.13
