@@ -56,17 +56,6 @@ RUN bash scripts/install_onnx_gpu_for_amd.sh && \
 ADD scripts/start_vespa.sh /usr/local/bin/start_vespa.sh
 
 # Install Vespa
-#RUN echo "install_weak_deps=False" >> /etc/dnf/dnf.conf && \
-#    dnf -y install \
-#      dnf-plugins-core \
-#      epel-release && \
-#    dnf config-manager --add-repo https://copr.fedorainfracloud.org/coprs/g/vespa/vespa/repo/epel-8/group_vespa-vespa-epel-8.repo && \
-#    dnf config-manager --enable powertools && \
-#    dnf -y install vespa && \
-#    dnf remove -y dnf-plugins-core && \
-#    dnf clean all && \
-#    rm -rf /var/cache/dnf
-
 RUN dnf config-manager \
   --add-repo https://raw.githubusercontent.com/vespa-engine/vespa/master/dist/vespa-engine.repo &&\
     dnf config-manager --enable powertools &&\
