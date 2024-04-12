@@ -39,6 +39,8 @@ RUN mkdir -p /root/nltk_data/tokenizers && \
     unzip /root/nltk_data/tokenizers/punkt.zip -d /root/nltk_data/tokenizers/ && \
     echo Target platform is "$TARGETPLATFORM"
 
+ENV NLTK_DATA=/root/nltk_data
+
 # Install pip dependencies
 COPY requirements.txt requirements.txt
 RUN pip3 install --no-cache-dir -r requirements.txt
