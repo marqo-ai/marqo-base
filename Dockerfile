@@ -22,7 +22,8 @@ RUN dnf groupinstall "Development Tools" -y && \
         tmux \
         libSM \
         libXext \
-        unzip
+        unzip    \
+        maven
 
 # Install ffmpeg and set java version
 COPY scripts scripts
