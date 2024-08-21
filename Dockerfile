@@ -1,7 +1,9 @@
-FROM quay.io/centos/centos:stream8 as stream8
+FROM quay.io/almalinux/almalinux:8 as almalinux8
 
 ARG TARGETPLATFORM
 
+# Update the public key
+RUN rpm --import https://repo.almalinux.org/almalinux/RPM-GPG-KEY-AlmaLinux-8
 
 # Install base packages that are used across both the application and Vespa
 RUN dnf install -y epel-release dnf-utils ca-certificates curl gnupg && \
@@ -56,11 +58,8 @@ RUN bash scripts/install_onnx_gpu_for_amd.sh && \
 ADD scripts/start_vespa.sh /usr/local/bin/start_vespa.sh
 
 # Install Vespa
-RUN dnf config-manager \
-  --add-repo https://raw.githubusercontent.com/vespa-engine/vespa/master/dist/vespa-engine.repo &&\
-    dnf config-manager --enable powertools &&\
-    dnf install -y epel-release &&\
-    dnf install -y vespa
+RUN dnf config-manager --add-repo https://raw.githubusercontent.com/vespa-engine/vespa/master/dist/vespa-engine.repo && \
+    dnf install -y vespa-8.396.18-1.el8
 
 # Set Envs for Vespa
 ENV PATH="/opt/vespa/bin:/opt/vespa-deps/bin:${PATH}"
