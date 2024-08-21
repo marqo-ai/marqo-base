@@ -9,7 +9,6 @@ RUN rpm --import https://repo.almalinux.org/almalinux/RPM-GPG-KEY-AlmaLinux-8
 RUN dnf install -y epel-release dnf-utils ca-certificates curl gnupg && \
     dnf config-manager --set-enabled powertools
 
-
 # Install application specific packages
 RUN dnf groupinstall "Development Tools" -y && \
     dnf install -y \
@@ -25,11 +24,6 @@ RUN dnf groupinstall "Development Tools" -y && \
         libSM \
         libXext \
         unzip
-
-# Install ffmpeg and set java version
-COPY scripts scripts
-RUN bash scripts/install_ffmpeg.sh
-
 
 # Set up Python 3.8 and pip
 RUN alternatives --set python3 /usr/bin/python3.8 && \
@@ -49,11 +43,8 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 COPY scripts scripts
 RUN bash scripts/install_onnx_gpu_for_amd.sh && \
     bash scripts/install_torch_amd.sh && \
-    bash scripts/install_redis_centos.sh && \
-    mkdir -p /etc/redis && \
-    touch /etc/redis/redis.conf && \
-    echo "echo never > /sys/kernel/mm/transparent_hugepage/enabled" >> /etc/rc.local && \
-    echo "save ''" >> /etc/redis/redis.conf
+    bash scripts/install_redis.sh && \
+    bash scripts/install_ffmpeg.sh
 
 ADD scripts/start_vespa.sh /usr/local/bin/start_vespa.sh
 
