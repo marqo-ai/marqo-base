@@ -1,26 +1,5 @@
 #!/bin/bash
-# This script is meant to be run at buildtime to install `ffmpeg` based on the target platform.
+# This script is meant to be run at buildtime to install `ffmpeg`
 
-# Check if TARGETPLATFORM is defined
-if [[ -z "$TARGETPLATFORM" ]]; then
-  echo "ERROR: The TARGETPLATFORM environment variable is undefined."
-  exit 2  # Exit with an error code indicating undefined TARGETPLATFORM
-fi
-
-# Check the target platform and install `ffmpeg` accordingly
-if [[ "$TARGETPLATFORM" == "linux/arm64" ]]; then
-  # For ARM64 platform, we use static build from https://johnvansickle.com/ffmpeg/
-  wget -O ffmpeg.tar.xz https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-arm64-static.tar.xz
-  mkdir -p temp/ffmpeg-static
-  tar xvf ffmpeg.tar.xz --strip-components=1 -C /temp/ffmpeg-static
-  mv /temp/ffmpeg-static/ffmpeg /usr/bin
-  mv /temp/ffmpeg-static/ffprobe /usr/bin
-  rm -r /temp/ffmpeg-static
-elif [[ "$TARGETPLATFORM" == "linux/amd64" ]]; then
-  # For AMD64 platform
-  dnf config-manager --add-repo=https://negativo17.org/repos/epel-multimedia.repo
-  dnf install -y ffmpeg
-else
-  # Handle unsupported platforms here, if needed
-  echo "WARNING: Unsupported target platform: $TARGETPLATFORM"
-fi
+dnf config-manager --add-repo=https://negativo17.org/repos/epel-multimedia.repo
+dnf install -y ffmpeg

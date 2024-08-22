@@ -1,4 +1,4 @@
-FROM quay.io/almalinux/almalinux:8 as almalinux8
+FROM quay.io/almalinux/almalinux:8 AS almalinux8
 
 ARG TARGETPLATFORM
 
@@ -10,30 +10,19 @@ RUN dnf install -y epel-release dnf-utils ca-certificates curl gnupg && \
     dnf config-manager --set-enabled powertools
 
 # Install application specific packages
-RUN dnf groupinstall "Development Tools" -y && \
-    dnf install -y \
+# RUN dnf groupinstall "Development Tools" -y && \
+RUN dnf install -y \
         lsof \
-        wget  \
         java-17-openjdk \
-        redhat-lsb-core \
-        jq \
         python38 \
-        python38-pip \
         python38-devel \
-        tmux \
-        libSM \
-        libXext \
+        gcc \
+        jq \
         unzip
 
 # Set up Python 3.8 and pip
 RUN alternatives --set python3 /usr/bin/python3.8 && \
     curl https://bootstrap.pypa.io/get-pip.py | python3
-
-# Punkt Tokenizer setup
-RUN mkdir -p /root/nltk_data/tokenizers && \
-    curl https://raw.githubusercontent.com/nltk/nltk_data/gh-pages/packages/tokenizers/punkt.zip -o /root/nltk_data/tokenizers/punkt.zip && \
-    unzip /root/nltk_data/tokenizers/punkt.zip -d /root/nltk_data/tokenizers/ && \
-    echo Target platform is "$TARGETPLATFORM"
 
 # Install pip dependencies
 COPY requirements.txt requirements.txt
@@ -44,16 +33,18 @@ COPY scripts scripts
 RUN bash scripts/install_onnx_gpu_for_amd.sh && \
     bash scripts/install_torch_amd.sh && \
     bash scripts/install_redis.sh && \
-    bash scripts/install_ffmpeg.sh
+    bash scripts/install_ffmpeg.sh && \
+    bash scripts/install_punkt_tokenizers.sh
 
-ADD scripts/start_vespa.sh /usr/local/bin/start_vespa.sh
-
-# Install Vespa
+# Install Vespa and pin the version. All versions can be found using `dns list vespa`
 RUN dnf config-manager --add-repo https://raw.githubusercontent.com/vespa-engine/vespa/master/dist/vespa-engine.repo && \
     dnf install -y vespa-8.396.18-1.el8
 
+ADD scripts/start_vespa.sh /usr/local/bin/start_vespa.sh
+
 # Set Envs for Vespa
 ENV PATH="/opt/vespa/bin:/opt/vespa-deps/bin:${PATH}"
+# TODO check if following env vars are required
 ENV VESPA_LOG_STDOUT="true"
 ENV VESPA_LOG_FORMAT="vespa"
 ENV VESPA_CLI_HOME=/tmp/.vespa
