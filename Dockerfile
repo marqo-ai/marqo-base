@@ -10,7 +10,6 @@ RUN dnf install -y epel-release dnf-utils ca-certificates curl gnupg && \
     dnf config-manager --set-enabled powertools
 
 # Install application specific packages
-# RUN dnf groupinstall "Development Tools" -y && \
 RUN dnf install -y \
         lsof \
         java-17-openjdk \
@@ -18,7 +17,8 @@ RUN dnf install -y \
         python38-devel \
         gcc \
         jq \
-        unzip
+        unzip \
+        tmux
 
 # Set up Python 3.8 and pip
 RUN alternatives --set python3 /usr/bin/python3.8 && \
@@ -37,6 +37,7 @@ RUN bash scripts/install_onnx_gpu_for_amd.sh && \
     bash scripts/install_punkt_tokenizers.sh
 
 # Install Vespa and pin the version. All versions can be found using `dns list vespa`
+# This is installed as a separate docker layer since we need to upgrade vespa regularly
 RUN dnf config-manager --add-repo https://raw.githubusercontent.com/vespa-engine/vespa/master/dist/vespa-engine.repo && \
     dnf install -y vespa-8.396.18-1.el8
 
