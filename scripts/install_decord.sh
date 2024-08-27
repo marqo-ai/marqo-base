@@ -8,8 +8,9 @@ fi
 
 if [[ "$TARGETPLATFORM" != "linux/arm64" ]]; then
   pip3 --no-cache-dir install --upgrade decord==0.6.0
-else
-  # https://github.com/georgia-tech-db/eva-decord is a fork of decord that works on arm platform
-  pip3 --no-cache-dir install --upgrade eva-decord==0.6.1
 fi
+# https://github.com/georgia-tech-db/eva-decord is a fork of decord that only works on macos
+# And there isn't any version working for linux/arm64 for now: https://github.com/dmlc/decord/issues/297
+# pip3 --no-cache-dir install --upgrade eva-decord==0.6.1
+
 
