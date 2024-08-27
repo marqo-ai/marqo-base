@@ -39,10 +39,11 @@ urllib3==1.26.16
 timm==1.0.8
 transformers==4.41.2
 safetensors==0.4.1
-decord==0.6.0
 einops==0.6.1
 soundfile==0.12.1
 python-magic==0.4.27
 ffmpeg-python==0.2.0
 librosa==0.10.2.post1
 pytorchvideo==0.1.5
+
+# TODO introduce platform specific requirement files
