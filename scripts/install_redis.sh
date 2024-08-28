@@ -1,10 +1,11 @@
 #!/bin/bash
 # This script is meant to be run at buildtime.
 
-# These updates must be run, or else old redis could be installed (like version 5.0.7)
-apt install lsb-release
-curl -fsSL https://packages.redis.io/gpg | gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/redis.list
-apt-get update
+# Add the EPEL repository which contains Redis for CentOS
+dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
 
-apt-get install redis-server -y
+dnf module install redis:remi-7.2 -y
+
+mkdir -p /etc/redis
+echo "save ''" >> /etc/redis/redis.conf
+echo "echo never > /sys/kernel/mm/transparent_hugepage/enabled" >> /etc/rc.local
