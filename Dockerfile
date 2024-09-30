@@ -71,7 +71,7 @@ RUN git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git && \
     cd ..
 
 ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
-
+RUN ldconfig
 
 ## Step 4: Install ffmpeg
 RUN git clone https://git.ffmpeg.org/ffmpeg.git
@@ -94,6 +94,4 @@ RUN cd ./ffmpeg && \
 RUN cd ./ffmpeg && \
     make -j $(nproc) && \
     make install
-
-RUN ldconfig
 # Finish ffmpeg installatio
