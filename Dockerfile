@@ -37,7 +37,7 @@ RUN bash scripts/install_onnx_gpu_for_amd.sh && \
     bash scripts/install_punkt_tokenizers.sh
 
 # Install ffmpeg based on the architecture
-RUN if [ "${TARGETARCH}" = "arm" ]; then \
+RUN if [ "${TARGETARCH}" = "arm64" ]; then \
       /scripts/install_ffmpeg.sh; \
     elif [ "${TARGETARCH}" = "amd64" ]; then \
       /scripts/install_ffmpeg_cuda.sh; \
