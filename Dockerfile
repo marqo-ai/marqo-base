@@ -17,6 +17,7 @@ RUN dnf install -y \
         python38-devel \
         gcc \
         jq \
+        wget \
         unzip \
         tmux
 
