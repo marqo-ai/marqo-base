@@ -32,9 +32,6 @@ dnf install -y x264 x264-devel
 
 # Step 4: Install NVENC codec headers
 # Install the necessary development tools and clone the nv-codec-headers repository
-dnf groupinstall -y "Development Tools"
-dnf clean all
-
 # Clone the nv-codec-headers repository and install it
 git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
 cd nv-codec-headers
