@@ -52,4 +52,15 @@ RUN git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git && \
     make install && \
     cd ..
 
+
+## Step 3: Install dependencies required for ffmpeg
+RUN dnf install libtool  \
+    glibc  \
+    glibc-devel  \
+    numactl  \
+    numactl-devel  \
+    openssl  \
+    yasm \
+    openssl-devel
+
 # Finish ffmpeg installatio
