@@ -63,4 +63,21 @@ RUN dnf install -y libtool  \
     yasm \
     openssl-devel
 
+
+## Step 4: Install ffmpeg
+RUN git clone https://git.ffmpeg.org/ffmpeg.git && \
+    cd ./ffmpeg \
+
+
+RUN ./configure --enable-nonfree \
+    --enable-cuda-nvcc \
+    --enable-libnpp \
+    --enable-libx264 \
+    --enable-openssl \
+    --enable-nvenc \
+    --enable-gpl \
+    --extra-cflags=-I/usr/local/cuda/include \
+    --extra-ldflags=-L/usr/local/cuda/lib64 \
+    --disable-static \
+    --enable-shared
 # Finish ffmpeg installatio
