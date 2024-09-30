@@ -29,7 +29,6 @@ dnf install -y libtool \
     make \
     gcc-c++ \
     kernel-headers \
-    libtool \
     automake
 
 # Step 3: Install x264
