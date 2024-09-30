@@ -65,8 +65,11 @@ RUN dnf groupinstall -y "Development Tools" && \
 
 RUN git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git && \
     cd nv-codec-headers && \
+    make && \
     make install && \
     cd ..
+
+ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
 
 
 ## Step 4: Install ffmpeg
