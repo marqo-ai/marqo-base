@@ -35,7 +35,7 @@ RUN dnf install -y \
 # Step 1: Install cuda toolkit
 RUN dnf config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/rhel8/x86_64/cuda-rhel8.repo && \
     dnf clean all && \
-    dnf -y install cuda
+    dnf -y install cuda-toolkit-12-6
 
 ## Step 2: Install nv-codec-headers
 #RUN git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git && \
