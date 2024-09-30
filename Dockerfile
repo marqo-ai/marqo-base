@@ -1,5 +1,9 @@
 FROM quay.io/almalinux/almalinux:8 AS almalinux8
 
+FROM nvidia/cuda:12.6.1-cudnn-devel-rockylinux8 as cuda-libs
+
+COPY --from=cuda-libs /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu
+
 ARG TARGETPLATFORM
 
 # Update the public key
@@ -97,8 +101,4 @@ RUN cd ./ffmpeg && \
     make install
 
 ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
-
-FROM nvidia/cuda:12.6.1-cudnn-devel-rockylinux8 as cuda-libs
-
-COPY --from=cuda-libs /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu
 # Finish ffmpeg installatio
