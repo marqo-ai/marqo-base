@@ -33,7 +33,7 @@ RUN dnf install -y \
 # Install ffmpeg
 
 # Step 1: Install cuda toolkit
-RUN dnf config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/rhel8/x86_64/cuda-rhel8.repo && \
+RUN dnf config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/rhel8/x86_64/cuda-rhel8.repo
 
 RUN dnf clean all && \
     dnf -y install cuda-toolkit-12-6
