@@ -26,6 +26,7 @@ dnf install -y libtool \
     openssl-devel \
     git \
     gcc \
+    make \
     gcc-c++ \
     kernel-headers \
     libtool \
