@@ -40,7 +40,7 @@ RUN dnf clean all && \
 
 # Set environment variables
 ENV PATH=/usr/local/cuda/bin:${PATH}
-ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:${LD_LIBRARY_PATH:-""}
+ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64
 
 ## Step 2: Install nv-codec-headers
 #RUN git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git && \
