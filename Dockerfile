@@ -50,6 +50,7 @@ RUN dnf install -y libtool  \
     numactl-devel  \
     openssl  \
     yasm \
+    pkg-config \
     openssl-devel
 
 ## Step 4: Install x264
