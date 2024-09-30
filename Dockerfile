@@ -62,7 +62,11 @@ RUN dnf install -y libtool  \
     openssl  \
     yasm \
     openssl-devel \
-    x264-devel
+
+## Step 4: Install x264
+
+RUN dnf install https://download1.rpmfusion.org/free/el/rpmfusion-free-release-8.noarch.rpm
+RUN dnf install x264 x264-devel
 
 
 ## Step 4: Install ffmpeg
