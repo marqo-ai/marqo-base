@@ -19,6 +19,7 @@ RUN dnf install -y \
         jq \
         wget \
         unzip \
+        git \
         tmux
 
 ## Set up Python 3.8 and pip
