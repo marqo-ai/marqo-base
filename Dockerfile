@@ -37,12 +37,12 @@ RUN bash scripts/install_onnx_gpu_for_amd.sh && \
     bash scripts/install_punkt_tokenizers.sh
 
 # Install ffmpeg based on the architecture
-RUN if [ "${TARGETARCH}" = "arm64" ]; then \
+RUN if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then \
       /scripts/install_ffmpeg.sh; \
-    elif [ "${TARGETARCH}" = "amd64" ]; then \
+    elif [ "${TARGETPLATFORM}" = "linux/amd64" ]; then \
       /scripts/install_ffmpeg_cuda.sh; \
     else \
-      echo "Unsupported architecture: ${TARGETARCH}" && exit 1; \
+      echo "Unsupported platform: ${TARGETARCH}" && exit 1; \
     fi
 
 # Install Vespa and pin the version. All versions can be found using `dns list vespa`
