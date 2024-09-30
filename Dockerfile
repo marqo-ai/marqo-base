@@ -71,8 +71,9 @@ RUN dnf install -y x264 x264-devel
 
 
 ## Step 4: Install ffmpeg
-RUN git clone https://git.ffmpeg.org/ffmpeg.git && \
-    cd ./ffmpeg && \
+RUN git clone https://git.ffmpeg.org/ffmpeg.git
+
+RUN cd ./ffmpeg && \
     ./configure --enable-nonfree \
     --enable-cuda-nvcc \
     --enable-libnpp \
