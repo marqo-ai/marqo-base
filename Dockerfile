@@ -13,15 +13,15 @@ RUN dnf install -y epel-release dnf-utils ca-certificates curl gnupg && \
 RUN dnf install -y \
         lsof \
         java-17-openjdk \
-        python38 \
-        python38-devel \
+        python39 \
+        python39-devel \
         gcc \
         jq \
         unzip \
         tmux
 
-# Set up Python 3.8 and pip
-RUN alternatives --set python3 /usr/bin/python3.8 && \
+# Set up Python 3.9 and pip
+RUN alternatives --set python3 /usr/bin/python3.9 && \
     curl https://bootstrap.pypa.io/get-pip.py | python3
 
 # Install pip dependencies
