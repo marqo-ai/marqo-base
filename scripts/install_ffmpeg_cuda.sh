@@ -71,5 +71,3 @@ cd ffmpeg
 make -j $(nproc)
 make install
 
-# Set NVIDIA driver capabilities to all by default
-export NVIDIA_DRIVER_CAPABILITIES=all
