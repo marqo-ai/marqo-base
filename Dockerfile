@@ -29,21 +29,19 @@ RUN dnf install -y \
 #COPY requirements.txt requirements.txt
 #RUN pip3 install --no-cache-dir -r requirements.txt
 
-# Setup scripts and execute them
-COPY scripts scripts
-RUN bash scripts/install_ffmpeg.sh
+# Install ffmpeg
 
-# Install Vespa and pin the version. All versions can be found using `dns list vespa`
-# This is installed as a separate docker layer since we need to upgrade vespa regularly
-RUN dnf config-manager --add-repo https://raw.githubusercontent.com/vespa-engine/vespa/master/dist/vespa-engine.repo && \
-    dnf install -y vespa-8.396.18-1.el8
+# Step 1: Install cuda toolkit
+RUN wget https://developer.download.nvidia.com/compute/cuda/12.6.1/local_installers/cuda-repo-rhel9-12-6-local-12.6.1_560.35.03-1.x86_64.rpm && \
+    rpm -i cuda-repo-rhel9-12-6-local-12.6.1_560.35.03-1.x86_64.rpm && \
+    dnf clean all && \
+    dnf -y install cuda-toolkit-12-6 && \
+    nvcc --version # Ensure nvcc is installed
 
-ADD scripts/start_vespa.sh /usr/local/bin/start_vespa.sh
+# Step 2: Install nv-codec-headers
+RUN git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git && \
+    cd nv-codec-headers && \
+    sudo make install && \
+    cd .. && \
 
-# Set Envs for Vespa
-ENV PATH="/opt/vespa/bin:/opt/vespa-deps/bin:${PATH}"
-# TODO check if following env vars are required
-ENV VESPA_LOG_STDOUT="true"
-ENV VESPA_LOG_FORMAT="vespa"
-ENV VESPA_CLI_HOME=/tmp/.vespa
-ENV VESPA_CLI_CACHE_DIR=/tmp/.cache/vespa
+# Finish ffmpeg installatio
