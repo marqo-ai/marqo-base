@@ -61,7 +61,8 @@ RUN dnf install -y libtool  \
     numactl-devel  \
     openssl  \
     yasm \
-    openssl-devel
+    openssl-devel \
+    x264-devel
 
 
 ## Step 4: Install ffmpeg
