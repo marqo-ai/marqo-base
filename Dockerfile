@@ -73,6 +73,8 @@ RUN dnf install -y x264 x264-devel
 ## Step 4: Install ffmpeg
 RUN git clone https://git.ffmpeg.org/ffmpeg.git
 
+env PATH=/usr/local/cuda/bin:${PATH}
+
 RUN cd ./ffmpeg && \
     ./configure --enable-nonfree \
     --enable-cuda-nvcc \
