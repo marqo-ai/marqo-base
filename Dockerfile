@@ -90,4 +90,8 @@ RUN cd ./ffmpeg && \
     --extra-ldflags=-L/usr/local/cuda/lib64 \
     --disable-static \
     --enable-shared
+
+RUN cd ./ffmpeg && \
+    make -j $(nproc) && \
+    make install
 # Finish ffmpeg installatio
