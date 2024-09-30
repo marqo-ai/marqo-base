@@ -4,6 +4,6 @@
 
 # Install CUDA toolkit to enable nvcc
 wget https://developer.download.nvidia.com/compute/cuda/12.6.1/local_installers/cuda-repo-rhel9-12-6-local-12.6.1_560.35.03-1.x86_64.rpm
-sudo rpm -i cuda-repo-rhel9-12-6-local-12.6.1_560.35.03-1.x86_64.rpm
-sudo dnf clean all
-sudo dnf -y install cuda-toolkit-12-6
+rpm -i cuda-repo-rhel9-12-6-local-12.6.1_560.35.03-1.x86_64.rpm
+dnf clean all
+dnf -y install cuda-toolkit-12-6
