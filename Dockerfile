@@ -43,9 +43,9 @@ ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64
 RUN nvcc --version # Ensure that nvcc is installed
 
 ## Step 2: Install nv-codec-headers
-#RUN git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git && \
-#    cd nv-codec-headers && \
-#    sudo make install && \
-#    cd ..
+RUN git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git && \
+    cd nv-codec-headers && \
+    sudo make install && \
+    cd ..
 
 # Finish ffmpeg installatio
