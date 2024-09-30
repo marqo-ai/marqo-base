@@ -41,6 +41,6 @@ RUN wget https://developer.download.nvidia.com/compute/cuda/12.6.1/local_install
 RUN git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git && \
     cd nv-codec-headers && \
     sudo make install && \
-    cd .. && \
+    cd ..
 
 # Finish ffmpeg installatio
