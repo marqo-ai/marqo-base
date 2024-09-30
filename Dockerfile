@@ -94,4 +94,6 @@ RUN cd ./ffmpeg && \
 RUN cd ./ffmpeg && \
     make -j $(nproc) && \
     make install
+
+RUN ldconfig
 # Finish ffmpeg installatio
