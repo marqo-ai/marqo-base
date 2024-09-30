@@ -1,7 +1,4 @@
-FROM nvidia/cuda:12.6.1-cudnn-devel-rockylinux8 AS cuda-libs
 FROM quay.io/almalinux/almalinux:8 AS almalinux8
-
-COPY --from=cuda-libs /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu
 
 ARG TARGETPLATFORM
 
@@ -99,5 +96,5 @@ RUN cd ./ffmpeg && \
     make -j $(nproc) && \
     make install
 
-ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+ENV NVIDIA_DRIVER_CAPABILITIES=all
 # Finish ffmpeg installatio
