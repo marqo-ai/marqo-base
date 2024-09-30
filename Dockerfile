@@ -42,17 +42,6 @@ ENV PATH=/usr/local/cuda/bin:${PATH}
 ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64
 RUN nvcc --version # Ensure that nvcc is installed
 
-## Step 2: Install nv-codec-headers
-# Install necessary tools, including Development Tools for 'make', 'gcc', etc.
-RUN dnf groupinstall -y "Development Tools" && \
-    dnf clean all
-
-RUN git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git && \
-    cd nv-codec-headers && \
-    make install && \
-    cd ..
-
-
 ## Step 3: Install dependencies required for ffmpeg
 RUN dnf install -y libtool  \
     glibc  \
@@ -68,6 +57,16 @@ RUN dnf install -y libtool  \
 RUN dnf install -y https://download1.rpmfusion.org/free/el/rpmfusion-free-release-8.noarch.rpm
 
 RUN dnf install -y x264 x264-devel
+
+## Step 2: Install nv-codec-headers
+# Install necessary tools, including Development Tools for 'make', 'gcc', etc.
+RUN dnf groupinstall -y "Development Tools" && \
+    dnf clean all
+
+RUN git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git && \
+    cd nv-codec-headers && \
+    make install && \
+    cd ..
 
 
 ## Step 4: Install ffmpeg
