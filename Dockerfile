@@ -66,10 +66,10 @@ RUN dnf install -y libtool  \
 
 ## Step 4: Install ffmpeg
 RUN git clone https://git.ffmpeg.org/ffmpeg.git && \
-    cd ./ffmpeg \
+    cd ./ffmpeg
 
 
-RUN ./configure --enable-nonfree \
+RUN bash ./configure --enable-nonfree \
     --enable-cuda-nvcc \
     --enable-libnpp \
     --enable-libx264 \
