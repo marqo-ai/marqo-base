@@ -23,7 +23,13 @@ dnf install -y libtool \
     openssl \
     yasm \
     pkg-config \
-    openssl-devel
+    openssl-devel \
+    git \
+    gcc \
+    gcc-c++ \
+    kernel-headers \
+    libtool \
+    automake
 
 # Step 3: Install x264
 # Add the RPM Fusion repository and install x264 and its development files
