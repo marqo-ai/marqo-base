@@ -71,7 +71,8 @@ RUN git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git && \
     cd ..
 
 ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
-RUN ldconfig
+RUN echo "/usr/local/lib" | tee -a /etc/ld.so.conf && ldconfig
+
 
 ## Step 4: Install ffmpeg
 RUN git clone https://git.ffmpeg.org/ffmpeg.git
