@@ -38,6 +38,9 @@ RUN dnf config-manager --add-repo https://developer.download.nvidia.com/compute/
 RUN dnf clean all && \
     dnf -y install cuda-toolkit-12-6
 
+ENV PATH=/usr/local/cuda/bin:${PATH}
+ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:${LD_LIBRARY_PATH}
+
 ## Step 2: Install nv-codec-headers
 #RUN git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git && \
 #    cd nv-codec-headers && \
