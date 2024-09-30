@@ -69,7 +69,7 @@ RUN git clone https://git.ffmpeg.org/ffmpeg.git && \
     cd ./ffmpeg
 
 
-RUN ./configure --enable-nonfree \
+RUN configure --enable-nonfree \
     --enable-cuda-nvcc \
     --enable-libnpp \
     --enable-libx264 \
