@@ -36,6 +36,7 @@ COPY --from=ffmpeg-build-stage /usr/lib64 /usr/lib64
 
 COPY --from=ffmpeg-build-stage /etc/ld.so.conf /etc/ld.so.conf
 COPY --from=ffmpeg-build-stage /etc/ld.so.cache /etc/ld.so.cache
+ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:/usr/local/cuda/targets/x86_64-linux/lib:$LD_LIBRARY_PATH
 
 RUN ldconfig
 #
