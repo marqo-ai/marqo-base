@@ -1,6 +1,8 @@
-FROM quay.io/almalinux/almalinux:8 AS build-stage
+FROM quay.io/almalinux/almalinux:8 AS ffmpeg-build-stage
 
 ARG TARGETPLATFORM
+
+COPY scripts scripts
 
 # Update the public key
 RUN rpm --import https://repo.almalinux.org/almalinux/RPM-GPG-KEY-AlmaLinux-8
@@ -9,41 +11,14 @@ RUN rpm --import https://repo.almalinux.org/almalinux/RPM-GPG-KEY-AlmaLinux-8
 RUN dnf install -y epel-release dnf-utils ca-certificates curl gnupg && \
     dnf config-manager --set-enabled powertools
 
-# Install dependencies for CUDA and FFmpeg compilation
-RUN dnf config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/rhel8/x86_64/cuda-rhel8.repo && \
-    dnf clean all && \
-    dnf -y install cuda-toolkit-12-6 libtool glibc glibc-devel numactl numactl-devel openssl yasm pkg-config \
-    openssl-devel git gcc make gcc-c++ kernel-headers automake
-
-RUN dnf install -y https://download1.rpmfusion.org/free/el/rpmfusion-free-release-8.noarch.rpm && \
-    dnf install -y x264 x264-devel
-
-RUN git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git && \
-    cd nv-codec-headers && \
-    git checkout 9934f17316b66ce6de12f3b82203a298bc9351d8 && \
-    make && \
-    make install
-
-# Set PKG_CONFIG_PATH for pkg-config to find the newly installed nv-codec-headers
-ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
-
-# Clone FFmpeg repository and fix the version
-RUN git clone https://git.ffmpeg.org/ffmpeg.git && \
-    cd ffmpeg && \
-    git checkout faa366003b58ba26484070ca408be4b9d5473a73 && \
-    ./configure --enable-nonfree \
-    --enable-cuda-nvcc \
-    --enable-libnpp \
-    --enable-libx264 \
-    --enable-openssl \
-    --enable-nvenc \
-    --enable-gpl \
-    --extra-cflags=-I/usr/local/cuda/include \
-    --extra-ldflags=-L/usr/local/cuda/lib64 \
-    --disable-static \
-    --enable-shared && \
-    make -j $(nproc) && \
-    make install
+RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
+        bash scripts/install_ffmpeg_cuda.sh; \
+    elif [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
+        bash scripts/install_ffmpeg.sh; \
+    else \
+        echo "Unsupported platform"; \
+        exit 1; \
+    fi
 
 FROM quay.io/almalinux/almalinux:8 AS almalinux8
 
