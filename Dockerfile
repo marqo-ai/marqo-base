@@ -33,6 +33,7 @@ COPY --from=ffmpeg-build-stage /usr/local/cuda /usr/local/cuda
 
 COPY --from=ffmpeg-build-stage /etc/ld.so.conf /etc/ld.so.conf
 COPY --from=ffmpeg-build-stage /etc/ld.so.cache /etc/ld.so.cache
+RUN ldconfig
 #
 ## Update the public key
 #RUN rpm --import https://repo.almalinux.org/almalinux/RPM-GPG-KEY-AlmaLinux-8
