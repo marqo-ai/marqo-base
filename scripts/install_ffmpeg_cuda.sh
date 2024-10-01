@@ -76,3 +76,14 @@ git checkout faa366003b58ba26484070ca408be4b9d5473a73 # Fix the version
 make -j $(nproc)
 make install
 
+# Do some cleanup
+rm -rf /nv-codec-headers
+rm -rf /ffmpeg
+
+dnf remove -y \
+    make \
+    git \
+    automake
+
+dnf clean all
+
