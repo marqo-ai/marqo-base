@@ -20,23 +20,19 @@ RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
         exit 1; \
     fi
 
-#FROM quay.io/almalinux/almalinux:8 AS almalinux8
-#
-#ARG TARGETPLATFORM
-#
-## Copy the compiled FFmpeg binaries from the build stage to the runtime stage
-#COPY --from=ffmpeg-build-stage /usr/local/bin/ffmpeg /usr/local/bin/
-#COPY --from=ffmpeg-build-stage /usr/local/bin/ffprobe /usr/local/bin/
-#COPY --from=ffmpeg-build-stage /usr/local/lib /usr/local/lib
-#COPY --from=ffmpeg-build-stage /usr/local/share/ffmpeg /usr/local/share/ffmpeg
-#COPY --from=ffmpeg-build-stage /usr/local/cuda /usr/local/cuda
-#COPY --from=ffmpeg-build-stage /ffmpeg /ffmpeg
-#
-#ENV PATH=/usr/local/cuda:${PATH}
-## Add /usr/local/lib to the library search path and update the dynamic linker cache
-#RUN echo "/usr/local/lib" | tee -a /etc/ld.so.conf && \
-#    echo "/usr/local/cuda-12.6/targets/x86_64-linux/lib/" | tee -a /etc/ld.so.conf && \
-#    ldconfig
+FROM quay.io/almalinux/almalinux:8 AS almalinux8
+
+ARG TARGETPLATFORM
+
+# Copy the compiled FFmpeg binaries from the build stage to the runtime stage
+COPY --from=ffmpeg-build-stage /usr/local/bin/ffmpeg /usr/local/bin/
+COPY --from=ffmpeg-build-stage /usr/local/bin/ffprobe /usr/local/bin/
+COPY --from=ffmpeg-build-stage /usr/local/lib /usr/local/lib
+COPY --from=ffmpeg-build-stage /usr/local/share/ffmpeg /usr/local/share/ffmpeg
+COPY --from=ffmpeg-build-stage /usr/local/cuda /usr/local/cuda
+
+COPY --from=build-stage /etc/ld.so.conf /etc/ld.so.conf
+RUN ldconfig
 #
 ## Update the public key
 #RUN rpm --import https://repo.almalinux.org/almalinux/RPM-GPG-KEY-AlmaLinux-8
