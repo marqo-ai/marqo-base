@@ -29,7 +29,7 @@ COPY --from=ffmpeg-build-stage /usr/local/bin/ffmpeg /usr/local/bin/
 COPY --from=ffmpeg-build-stage /usr/local/bin/ffprobe /usr/local/bin/
 COPY --from=ffmpeg-build-stage /usr/local/lib /usr/local/lib
 COPY --from=ffmpeg-build-stage /usr/local/share/ffmpeg /usr/local/share/ffmpeg
-COPY --from=ffmpeg-build-stage /usr/local/cuda-12.6 /usr/local/cuda-12.6
+COPY --from=ffmpeg-build-stage /usr/local/cuda /usr/local/cuda
 COPY --from=ffmpeg-build-stage /ffmpeg /ffmpeg
 
 ENV PATH=/usr/local/cuda:${PATH}
