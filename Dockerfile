@@ -20,14 +20,16 @@ ARG TARGETPLATFORM
 
 COPY scripts scripts
 
+
 RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
-        cp /usr/local/bin/ffmpeg /usr/local/bin/ffmpeg && \
-        cp /usr/local/bin/ffprobe /usr/local/bin/ffprobe && \
-        cp -r /usr/local/lib/ /usr/local/lib && \
-        cp -r /usr/local/share/ffmpeg /usr/local/share/ffmpeg && \
-        cp -r /usr/local/cuda /usr/local/cuda && \
-        cp /usr/lib64/libx264* /usr/lib64 && \
-        export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/cuda/lib64:$LD_LIBRARY_PATH && \
+        echo "Copying FFmpeg and related binaries for amd64"; \
+        COPY --from=ffmpeg-build-amd64 /usr/local/bin/ffmpeg /usr/local/bin/ffmpeg && \
+        COPY --from=ffmpeg-build-amd64 /usr/local/bin/ffprobe /usr/local/bin/ffprobe && \
+        COPY --from=ffmpeg-build-amd64 /usr/local/lib/ /usr/local/lib && \
+        COPY --from=ffmpeg-build-amd64 /usr/local/share/ffmpeg /usr/local/share/ffmpeg && \
+        COPY --from=ffmpeg-build-amd64 /usr/local/cuda /usr/local/cuda && \
+        COPY --from=ffmpeg-build-amd64 /usr/lib64/libx264* /usr/lib64 && \
+        ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/local/cuda/lib64:$LD_LIBRARY_PATH && \
         ldconfig; \
     else \
         echo "Skipping FFmpeg copy"; \
