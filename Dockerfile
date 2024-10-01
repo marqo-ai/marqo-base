@@ -31,7 +31,7 @@ COPY --from=ffmpeg-build-stage /usr/local/lib /usr/local/lib
 COPY --from=ffmpeg-build-stage /usr/local/share/ffmpeg /usr/local/share/ffmpeg
 COPY --from=ffmpeg-build-stage /usr/local/cuda /usr/local/cuda
 
-COPY --from=build-stage /etc/ld.so.conf /etc/ld.so.conf
+COPY --from=ffmpeg-build-stage /etc/ld.so.conf /etc/ld.so.conf
 RUN ldconfig
 #
 ## Update the public key
