@@ -27,9 +27,9 @@ ARG TARGETPLATFORM
 # Copy the compiled FFmpeg binaries from the build stage to the runtime stage
 COPY --from=ffmpeg-build-stage /usr/local/bin/ffmpeg /usr/local/bin/
 COPY --from=ffmpeg-build-stage /usr/local/bin/ffprobe /usr/local/bin/
-COPY --from=ffmpeg-build-stage /usr/local/lib/libav* /usr/local/lib
+COPY --from=ffmpeg-build-stage /usr/local/lib/ /usr/local/lib
 COPY --from=ffmpeg-build-stage /usr/local/share/ffmpeg /usr/local/share/ffmpeg
-COPY --from=ffmpeg-build-stage /usr/local/cuda /usr/local/cuda
+# COPY --from=ffmpeg-build-stage /usr/local/cuda /usr/local/cuda
 
 COPY --from=ffmpeg-build-stage /usr/lib64/libx264* /usr/lib64
 
