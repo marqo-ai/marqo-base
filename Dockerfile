@@ -31,7 +31,7 @@ RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
         ldconfig; \
     else \
         echo "Skipping FFmpeg copy"; \
-    fi \
+    fi
 
 # Update the public key
 RUN rpm --import https://repo.almalinux.org/almalinux/RPM-GPG-KEY-AlmaLinux-8
