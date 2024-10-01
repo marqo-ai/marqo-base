@@ -25,10 +25,10 @@ FROM quay.io/almalinux/almalinux:8 AS almalinux8
 ARG TARGETPLATFORM
 
 # Copy the compiled FFmpeg binaries from the build stage to the runtime stage
-COPY --FROM=build-stage /usr/local/bin/ffmpeg /usr/local/bin/
-COPY --FROM=build-stage /usr/local/bin/ffprobe /usr/local/bin/
-COPY --FROM=build-stage /usr/local/lib /usr/local/lib
-COPY --FROM=build-stage /usr/local/share/ffmpeg /usr/local/share/ffmpeg
+COPY --from=ffmpeg-build-stage /usr/local/bin/ffmpeg /usr/local/bin/
+COPY --from=ffmpeg-build-stage /usr/local/bin/ffprobe /usr/local/bin/
+COPY --from=ffmpeg-build-stage /usr/local/lib /usr/local/lib
+COPY --from=ffmpeg-build-stage /usr/local/share/ffmpeg /usr/local/share/ffmpeg
 
 # Set the library path for runtime dependencies
 ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
