@@ -25,7 +25,7 @@ RUN git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git && \
     make install && \
 
 # Set PKG_CONFIG_PATH for pkg-config to find the newly installed nv-codec-headers
-ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
 
 # Clone FFmpeg repository and fix the version
 RUN git clone https://git.ffmpeg.org/ffmpeg.git && \
