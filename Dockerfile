@@ -4,17 +4,11 @@ ARG TARGETPLATFORM
 
 COPY scripts scripts
 
-# Update the public key
-RUN rpm --import https://repo.almalinux.org/almalinux/RPM-GPG-KEY-AlmaLinux-8
-
-# Install base packages that are used across both the application and Vespa
-RUN dnf install -y epel-release dnf-utils ca-certificates curl gnupg && \
-    dnf config-manager --set-enabled powertools
-
+# Build FFmpeg for amd64 with CUDA support
 RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
         bash scripts/install_ffmpeg_cuda.sh; \
     elif [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
-        bash scripts/install_ffmpeg.sh; \
+        echo "Skipping FFmpeg build for arm64"; \
     else \
         echo "Unsupported platform"; \
         exit 1; \
@@ -24,18 +18,25 @@ FROM quay.io/almalinux/almalinux:8 AS almalinux8
 
 ARG TARGETPLATFORM
 
-# Copy the compiled FFmpeg binaries from the build stage to the runtime stage
-COPY --from=ffmpeg-build-stage /usr/local/bin/ffmpeg /usr/local/bin/
-COPY --from=ffmpeg-build-stage /usr/local/bin/ffprobe /usr/local/bin/
-COPY --from=ffmpeg-build-stage /usr/local/lib/ /usr/local/lib
-COPY --from=ffmpeg-build-stage /usr/local/share/ffmpeg /usr/local/share/ffmpeg
-COPY --from=ffmpeg-build-stage /usr/local/cuda /usr/local/cuda
+COPY scripts scripts
 
-COPY --from=ffmpeg-build-stage /usr/lib64/libx264* /usr/lib64
-
-ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/local/cuda/lib64:$LD_LIBRARY_PATH
-RUN ldconfig
-
+RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
+        # Copying FFmpeg and GPU-related libraries for amd64 \
+        cp /usr/local/bin/ffmpeg /usr/local/bin/ffmpeg && \
+        cp /usr/local/bin/ffprobe /usr/local/bin/ffprobe && \
+        cp -r /usr/local/lib/ /usr/local/lib && \
+        cp -r /usr/local/share/ffmpeg /usr/local/share/ffmpeg && \
+        cp -r /usr/local/cuda /usr/local/cuda && \
+        cp /usr/lib64/libx264* /usr/lib64 && \
+        export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/cuda/lib64:$LD_LIBRARY_PATH && \
+        ldconfig \
+    elif [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
+        # Installing FFmpeg using dnf for arm64 \
+        bash scripts/install_ffmpeg.sh; \
+    else \
+        echo "Unsupported platform"; \
+        exit 1; \
+    fi
 # Update the public key
 RUN rpm --import https://repo.almalinux.org/almalinux/RPM-GPG-KEY-AlmaLinux-8
 

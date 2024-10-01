@@ -1,5 +1,9 @@
 #!/bin/bash
 
+rpm --import https://repo.almalinux.org/almalinux/RPM-GPG-KEY-AlmaLinux-8
+dnf install -y epel-release dnf-utils ca-certificates curl gnupg
+dnf config-manager --set-enabled powertools
+
 # Step 1: Install CUDA Toolkit
 # Add the NVIDIA repository for CUDA and install CUDA toolkit version 12.6
 dnf config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/rhel8/x86_64/cuda-rhel8.repo
