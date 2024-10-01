@@ -29,6 +29,7 @@ COPY --from=ffmpeg-build-stage /usr/local/bin/ffmpeg /usr/local/bin/
 COPY --from=ffmpeg-build-stage /usr/local/bin/ffprobe /usr/local/bin/
 COPY --from=ffmpeg-build-stage /usr/local/lib /usr/local/lib
 COPY --from=ffmpeg-build-stage /usr/local/share/ffmpeg /usr/local/share/ffmpeg
+COPY --from=ffmpeg-build-stage /usr/local/cuda /usr/local/cuda
 
 # Set the library path for runtime dependencies
 ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/local/cuda/lib64:/usr/lib64:$LD_LIBRARY_PATH
@@ -82,5 +83,3 @@ ENV VESPA_LOG_FORMAT="vespa"
 ENV VESPA_CLI_HOME=/tmp/.vespa
 ENV VESPA_CLI_CACHE_DIR=/tmp/.cache/vespa
 ENV NVIDIA_DRIVER_CAPABILITIES=all
-ENV PATH=/usr/local/cuda/bin:${PATH}
-ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/local/cuda/lib64:/usr/lib64
