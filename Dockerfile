@@ -82,3 +82,4 @@ ENV VESPA_LOG_FORMAT="vespa"
 ENV VESPA_CLI_HOME=/tmp/.vespa
 ENV VESPA_CLI_CACHE_DIR=/tmp/.cache/vespa
 ENV NVIDIA_DRIVER_CAPABILITIES=all
+ENV PATH=/usr/local/cuda/bin:${PATH}
