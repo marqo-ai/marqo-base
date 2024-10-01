@@ -29,10 +29,10 @@ COPY --from=ffmpeg-build-stage /usr/local/bin/ffmpeg /usr/local/bin/
 COPY --from=ffmpeg-build-stage /usr/local/bin/ffprobe /usr/local/bin/
 COPY --from=ffmpeg-build-stage /usr/local/lib /usr/local/lib
 COPY --from=ffmpeg-build-stage /usr/local/share/ffmpeg /usr/local/share/ffmpeg
-COPY --from=ffmpeg-build-stage /usr/local/cuda /usr/local/cuda
 
-# Set the library path for runtime dependencies
-ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/local/cuda/lib64:/usr/lib64:$LD_LIBRARY_PATH
+# Add /usr/local/lib to the library search path and update the dynamic linker cache
+RUN echo "/usr/local/lib" | tee -a /etc/ld.so.conf && \
+    ldconfig
 
 # Update the public key
 RUN rpm --import https://repo.almalinux.org/almalinux/RPM-GPG-KEY-AlmaLinux-8
