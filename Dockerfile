@@ -34,7 +34,7 @@ COPY --from=ffmpeg-build-stage /usr/local/cuda /usr/local/cuda
 
 COPY --from=ffmpeg-build-stage /usr/lib64 /usr/lib64
 
-ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64:/usr/local/cuda/targets/x86_64-linux/lib:$LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/local/cuda/lib64:$LD_LIBRARY_PATH
 RUN ldconfig
 #
 ## Update the public key
