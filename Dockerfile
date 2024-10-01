@@ -21,7 +21,6 @@ ARG TARGETPLATFORM
 COPY scripts scripts
 
 RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
-        # Copying FFmpeg and GPU-related libraries for amd64 \
         cp /usr/local/bin/ffmpeg /usr/local/bin/ffmpeg && \
         cp /usr/local/bin/ffprobe /usr/local/bin/ffprobe && \
         cp -r /usr/local/lib/ /usr/local/lib && \
@@ -29,9 +28,8 @@ RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
         cp -r /usr/local/cuda /usr/local/cuda && \
         cp /usr/lib64/libx264* /usr/lib64 && \
         export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/cuda/lib64:$LD_LIBRARY_PATH && \
-        ldconfig \
+        ldconfig; \
     elif [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
-        # Installing FFmpeg using dnf for arm64 \
         bash scripts/install_ffmpeg.sh; \
     else \
         echo "Unsupported platform"; \
