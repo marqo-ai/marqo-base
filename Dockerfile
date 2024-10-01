@@ -30,6 +30,7 @@ COPY --from=ffmpeg-build-stage /usr/local/bin/ffprobe /usr/local/bin/
 COPY --from=ffmpeg-build-stage /usr/local/lib /usr/local/lib
 COPY --from=ffmpeg-build-stage /usr/local/share/ffmpeg /usr/local/share/ffmpeg
 COPY --from=ffmpeg-build-stage /usr/local/cuda-12.6 /usr/local/cuda-12.6
+COPY --from=ffmpeg-build-stage /ffmpeg /ffmpeg
 
 # Add /usr/local/lib to the library search path and update the dynamic linker cache
 RUN echo "/usr/local/lib:/usr/local/cuda-12.6" | tee -a /etc/ld.so.conf && \
