@@ -20,13 +20,6 @@ ARG TARGETPLATFORM
 
 COPY scripts scripts
 
-# Update the public key
-RUN rpm --import https://repo.almalinux.org/almalinux/RPM-GPG-KEY-AlmaLinux-8
-
-# Install base packages that are used across both the application and Vespa
-RUN dnf install -y epel-release dnf-utils ca-certificates curl gnupg && \
-    dnf config-manager --set-enabled powertools
-
 RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
         cp /usr/local/bin/ffmpeg /usr/local/bin/ffmpeg && \
         cp /usr/local/bin/ffprobe /usr/local/bin/ffprobe && \
@@ -36,12 +29,16 @@ RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
         cp /usr/lib64/libx264* /usr/lib64 && \
         export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/cuda/lib64:$LD_LIBRARY_PATH && \
         ldconfig; \
-    elif [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
-        bash scripts/install_ffmpeg.sh; \
     else \
-        echo "Unsupported platform"; \
-        exit 1; \
-    fi
+        echo "Skipping FFmpeg copy"; \
+    fi \
+
+# Update the public key
+RUN rpm --import https://repo.almalinux.org/almalinux/RPM-GPG-KEY-AlmaLinux-8
+
+# Install base packages that are used across both the application and Vespa
+RUN dnf install -y epel-release dnf-utils ca-certificates curl gnupg && \
+    dnf config-manager --set-enabled powertools
 
 # Install application specific packages
 RUN dnf install -y \
@@ -68,7 +65,10 @@ RUN bash scripts/install_onnx_gpu_for_amd.sh && \
     bash scripts/install_torch_amd.sh && \
     bash scripts/install_decord.sh && \
     bash scripts/install_redis.sh && \
-    bash scripts/install_punkt_tokenizers.sh
+    bash scripts/install_punkt_tokenizers.sh \
+    if [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
+        bash scripts/install_ffmpeg.sh; \
+    fi
 
 # Install Vespa and pin the version. All versions can be found using `dns list vespa`
 # This is installed as a separate docker layer since we need to upgrade vespa regularly
