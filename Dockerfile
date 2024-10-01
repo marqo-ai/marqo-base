@@ -32,7 +32,7 @@ COPY --from=ffmpeg-build-stage /usr/local/share/ffmpeg /usr/local/share/ffmpeg
 COPY --from=ffmpeg-build-stage /usr/local/cuda-12.6 /usr/local/cuda-12.6
 COPY --from=ffmpeg-build-stage /ffmpeg /ffmpeg
 
-ENV PATH=/usr/local/cuda/bin:${PATH}
+ENV PATH=/usr/local/cuda:${PATH}
 # Add /usr/local/lib to the library search path and update the dynamic linker cache
 RUN echo "/usr/local/lib" | tee -a /etc/ld.so.conf && \
     echo "/usr/local/cuda-12.6/targets/x86_64-linux/lib/" | tee -a /etc/ld.so.conf && \
