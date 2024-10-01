@@ -20,6 +20,13 @@ ARG TARGETPLATFORM
 
 COPY scripts scripts
 
+# Update the public key
+RUN rpm --import https://repo.almalinux.org/almalinux/RPM-GPG-KEY-AlmaLinux-8
+
+# Install base packages that are used across both the application and Vespa
+RUN dnf install -y epel-release dnf-utils ca-certificates curl gnupg && \
+    dnf config-manager --set-enabled powertools
+
 RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
         cp /usr/local/bin/ffmpeg /usr/local/bin/ffmpeg && \
         cp /usr/local/bin/ffprobe /usr/local/bin/ffprobe && \
@@ -35,12 +42,6 @@ RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
         echo "Unsupported platform"; \
         exit 1; \
     fi
-# Update the public key
-RUN rpm --import https://repo.almalinux.org/almalinux/RPM-GPG-KEY-AlmaLinux-8
-
-# Install base packages that are used across both the application and Vespa
-RUN dnf install -y epel-release dnf-utils ca-certificates curl gnupg && \
-    dnf config-manager --set-enabled powertools
 
 # Install application specific packages
 RUN dnf install -y \
