@@ -2,6 +2,13 @@ FROM quay.io/almalinux/almalinux:8 AS build-stage
 
 ARG TARGETPLATFORM
 
+# Update the public key
+RUN rpm --import https://repo.almalinux.org/almalinux/RPM-GPG-KEY-AlmaLinux-8
+
+# Install base packages that are used across both the application and Vespa
+RUN dnf install -y epel-release dnf-utils ca-certificates curl gnupg && \
+    dnf config-manager --set-enabled powertools
+
 # Install dependencies for CUDA and FFmpeg compilation
 RUN dnf config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/rhel8/x86_64/cuda-rhel8.repo && \
     dnf clean all && \
