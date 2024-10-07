@@ -50,6 +50,12 @@ RUN if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then \
 RUN dnf config-manager --add-repo https://raw.githubusercontent.com/vespa-engine/vespa/master/dist/vespa-engine.repo && \
     dnf install -y vespa-8.396.18-1.el8
 
+# Remove java 1.8.0 dependency and set Java version to 17
+RUN dnf remove -y java-1.8.0-openjdk
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk
+ENV PATH="$JAVA_HOME/bin:$PATH"
+ENV VESPA_JAVA_HOME=/usr/lib/jvm/java-17-openjdk
+
 ADD scripts/start_vespa.sh /usr/local/bin/start_vespa.sh
 
 # Set Envs for Vespa
