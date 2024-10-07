@@ -34,16 +34,8 @@ RUN bash scripts/install_onnx_gpu_for_amd.sh && \
     bash scripts/install_torch_amd.sh && \
     bash scripts/install_decord.sh && \
     bash scripts/install_redis.sh && \
+    bash scripts/install_ffmpeg.sh && \
     bash scripts/install_punkt_tokenizers.sh
-
-# Install ffmpeg based on the architecture
-RUN if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then \
-      bash /scripts/install_ffmpeg.sh; \
-    elif [ "${TARGETPLATFORM}" = "linux/amd64" ]; then \
-      bash /scripts/install_ffmpeg_cuda.sh; \
-    else \
-      echo "Unsupported platform: ${TARGETARCH}" && exit 1; \
-    fi
 
 # Install Vespa and pin the version. All versions can be found using `dns list vespa`
 # This is installed as a separate docker layer since we need to upgrade vespa regularly
@@ -59,4 +51,3 @@ ENV VESPA_LOG_STDOUT="true"
 ENV VESPA_LOG_FORMAT="vespa"
 ENV VESPA_CLI_HOME=/tmp/.vespa
 ENV VESPA_CLI_CACHE_DIR=/tmp/.cache/vespa
-ENV NVIDIA_DRIVER_CAPABILITIES=utility,compute,video
