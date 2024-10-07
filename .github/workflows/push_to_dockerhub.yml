@@ -88,7 +88,7 @@ jobs:
         run: echo "${{ steps.set_image_pointer.outputs.image_pointer }}" > img_info.txt
 
       - name: Upload Docker image location as artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: docker-image-info
           path: img_info.txt
