@@ -35,7 +35,7 @@ dnf install -y x264 x264-devel
 # Clone the nv-codec-headers repository and install it
 git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
 cd nv-codec-headers
-git checkout 9934f17316b66ce6de12f3b82203a298bc9351d8 # Fix the version
+#git checkout 9934f17316b66ce6de12f3b82203a298bc9351d8 # Fix the version
 make
 make install
 cd ..
@@ -49,7 +49,7 @@ ldconfig
 git clone https://git.ffmpeg.org/ffmpeg.git
 # Configure and compile FFmpeg with necessary flags for NVIDIA, x264, and other libraries
 cd ffmpeg
-git checkout faa366003b58ba26484070ca408be4b9d5473a73 # Fix the version
+#git checkout faa366003b58ba26484070ca408be4b9d5473a73 # Fix the version
 ./configure --enable-nonfree \
     --enable-cuda-nvcc \
     --enable-libnpp \
