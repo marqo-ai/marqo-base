@@ -30,10 +30,7 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Setup scripts and execute them
 COPY scripts scripts
-RUN bash scripts/install_onnx_gpu_for_amd.sh && \
-    bash scripts/install_torch_amd.sh && \
-    bash scripts/install_decord.sh && \
-    bash scripts/install_redis.sh && \
+RUN bash scripts/install_redis.sh && \
     bash scripts/install_punkt_tokenizers.sh
 
 # Install ffmpeg based on the architecture
