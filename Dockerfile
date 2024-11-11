@@ -57,5 +57,5 @@ ENV VESPA_LOG_FORMAT="vespa"
 ENV VESPA_CLI_HOME=/tmp/.vespa
 ENV VESPA_CLI_CACHE_DIR=/tmp/.cache/vespa
 ENV NVIDIA_DRIVER_CAPABILITIES=utility,compute,video
-# expose nltk data to the container of all users
+# expose nltk data to all users
 ENV NLTK_DATA=/root/nltk_data
