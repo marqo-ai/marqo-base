@@ -1,4 +1,8 @@
 #!/bin/bash
+
+set -euo pipefail
+set -x
+
 # Step 1: Install CUDA Toolkit
 # Add the NVIDIA repository for CUDA and install CUDA toolkit version 12.6
 dnf config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/rhel8/x86_64/cuda-rhel8.repo
@@ -72,3 +76,5 @@ dnf remove -y \
     git \
     automake
 dnf clean all
+set +x
+
