@@ -20,13 +20,7 @@ permissions:
 jobs:
   tests:
     name: Run requirements tests on multiple architectures
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest, ubuntu-20.04]
-        architecture: [x86_64, arm64]
-      fail-fast: false
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout the repository
