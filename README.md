@@ -17,7 +17,7 @@ pip-compile requirements.in --output-file=requirements.txt --strip-extras
 to generate the `requirements.txt` file. This file is used to install the dependencies in the Dockerfile.
 If any of the dependencies/sub-dependencies are not pinned and are updated when you run `pip-compile`, you should add
 the new version to the `requirements.in` file and run the above command again until they converge.
-We have an automated pipeline for this check. You SHOULD NOT manually update the `requirements.txt` file for dependencies 
+We have an automated pipeline for this check. You **SHOULD NOT** manually update the `requirements.txt` file for dependencies 
 unless they are cross-platform dependencies. We will talk about cross-platform dependencies in the next section.
 
 ### Cross-platform Dependencies:
