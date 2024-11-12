@@ -3,6 +3,36 @@ The dependencies and Dockerfile for creating the Marqo base image
 
 The marqo-base image is an image that has the necessary dependencies for the Marqo to be installed on and run. This speeds up the build process. 
 
+## Manage Dependencies
+
+The marqo-base image contains all the dependencies needed to run Marqo. We use `pip-compile` to 
+to manage the dependencies. It is a part of the `pip-tools` package and can be installed as
+```bash
+pip install pip-tools
+```
+In case you want to add a new dependency, you can add it to the `requirements.in` file and run
+```bash
+pip-compile requirements.in --output-file=requirements.txt --strip-extras
+```
+to generate the `requirements.txt` file. This file is used to install the dependencies in the Dockerfile.
+If any of the dependencies/sub-dependencies are not pinned and are updated when you run `pip-compile`, you should add
+the new version to the `requirements.in` file and run the above command again until they converge.
+We have an automated pipeline for this check. Ideally, you should not commit to the `requirements.txt` file directly.
+
+### Cross-platform Dependencies:
+We use [environment markers](https://peps.python.org/pep-0508/#environment-markers) to manage cross-platform
+dependencies. For example, we have
+```text
+torch==1.12.1+cu113; platform_machine == "x86_64"
+torch==1.12.1; platform_machine == "arm64" or platform_machine == "aarch64"
+```
+The `pip-comple` tool does not support cross-platform dependencies. If you run `pip-compile` on the `requirements.in` file 
+on an `x86_64` machine, it will generate the `torch==1.12.1+cu113; platform_machine == "x86_64"` line, but remove the
+`torch==1.12.1; platform_machine == "arm64" or platform_machine == "aarch64"` line, and vice versa. 
+
+In such cases, you should manually add the missing line to the `requirements.txt` file, especially for these cross-platform
+dependencies.
+
 ## Build and push a new Marqo-base version to Dockerhub
 To release a new version of Marqo-base to Dockerhub:
 
