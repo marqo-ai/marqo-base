@@ -38,7 +38,7 @@ jobs:
 
       - name: Generate requirements-generated.txt
         run: |
-          pip-compile --output-file requirements-generated.txt requirements.in --strip-extras
+          pip-compile --output-file=./requirements/generated-requirements.txt ./requirements/requirements.in --strip-extras
 
       - name: Check if requirements.txt is the same as requirements-generated.txt
         run: |

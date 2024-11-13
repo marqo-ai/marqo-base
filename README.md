@@ -17,8 +17,7 @@ pip-compile requirements.in --output-file=requirements.txt --strip-extras
 to generate the `requirements.txt` file. This file is used to install the dependencies in the Dockerfile.
 If any of the dependencies/sub-dependencies are not pinned and are updated when you run `pip-compile`, you should add
 the new version to the `requirements.in` file and run the above command again until they converge.
-We have an automated pipeline for this check. You **SHOULD NOT** manually update the `requirements.txt` file for dependencies 
-unless they are cross-platform dependencies. We will talk about cross-platform dependencies in the next section.
+We have an automated pipeline for this check. You **SHOULD NOT** manually update the `requirements.txt` file for dependencies.
 
 ### Cross-platform Dependencies:
 We use [environment markers](https://peps.python.org/pep-0508/#environment-markers) to manage cross-platform
@@ -31,8 +30,13 @@ The `pip-comple` tool does not support cross-platform dependencies. If you run `
 on an `x86_64` machine, it will generate the `torch==1.12.1+cu113; platform_machine == "x86_64"` line, but remove the
 `torch==1.12.1; platform_machine == "arm64" or platform_machine == "aarch64"` line, and vice versa. 
 
-In such cases, you should manually add the missing line to the `requirements.txt` file, especially for these cross-platform
-dependencies.
+In such cases, **you are supposed to run `pip-compile` on the `requirements.in` file on both `x86_64` and `arm64` machines** 
+and generate two `requirements.txt` files, e.g., `amd64-gpu-requirements.txt` and `arm64-requirements.txt`. We do not have
+seperated files to distinguish between `amd64` and `amd64-gpu` at the moment, but we might have in the future.
+Here is an example of how to generate the `amd64-gpu-requirements.txt` file:
+```bash
+pip-compile --output-file=./requirements/amd64-gpu-requirements.txt ./requirements/requirements.in --strip-extras
+```
 
 ## Build and push a new Marqo-base version to Dockerhub
 To release a new version of Marqo-base to Dockerhub:
