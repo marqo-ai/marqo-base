@@ -1,9 +1,8 @@
-from unittest import TestCase
 import os
-import re
 from dataclasses import dataclass, field
-from typing import Set, Optional
 import platform
+from typing import Set, Optional
+from unittest import TestCase
 
 
 @dataclass(frozen=True, eq=True)
@@ -12,27 +11,26 @@ class Package:
     version: str
     markers: Optional[str] = field(default="")
 
-    def __hash__(self):
-        # Ensure consistent hashing based on name and markers, ignoring version for comparison purposes
-        return hash(self.name)
-
 
 class TestRequirements(TestCase):
-
-    CROSS_PLATFORM_REQUIREMENTS = {
-        "torch", "torchaudio", "torchvision", "numpy", "onnxruntime-gpu",
-        "decord"
-    }
-
     @classmethod
     def setUpClass(cls):
-        cls.requirements = os.path.join(os.getcwd(), 'requirements.txt')
-        cls.generated_requirements = os.path.join(os.getcwd(), 'requirements-generated.txt')
 
+        requirements_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "requirements")
+        if platform.machine() in ["arm64", "aarch64"]:
+            cls.requirements = "arm64-requirements.txt"
+        elif platform.machine() == "x86_64":
+            cls.requirements = "amd64-gpu-requirements.txt"
+        else:
+            raise ValueError(f"Unsupported platform: {platform.machine()}")
+
+        cls.requirements = os.path.join(requirements_dir, cls.requirements)
         if not os.path.exists(cls.requirements):
-            raise FileNotFoundError(f"File {cls.requirements} not found")
+            raise FileNotFoundError(f"Requirements file not found: {cls.requirements}")
+
+        cls.generated_requirements = os.path.join(requirements_dir, "generated-requirements.txt")
         if not os.path.exists(cls.generated_requirements):
-            raise FileNotFoundError(f"File {cls.generated_requirements} not found")
+            raise FileNotFoundError(f"Generated requirements file not found: {cls.generated_requirements}")
 
     def _parse_requirements(self, file_path: str) -> Set[Package]:
         """Parses requirements file and returns a set of Package objects"""
@@ -51,10 +49,6 @@ class TestRequirements(TestCase):
                     if '==' in line:
                         package, version = line.split('==')
                         package = package.replace('_', '-').lower().strip()
-                        # Skip cross-platform requirements
-                        if package in self.CROSS_PLATFORM_REQUIREMENTS:
-                            continue
-                        requirements.add(Package(package, version, markers))
         return requirements
 
     def test_compare_requirements(self):
