@@ -38,6 +38,10 @@ Here is an example of how to generate the `amd64-gpu-requirements.txt` file:
 pip-compile --output-file=./requirements/amd64-gpu-requirements.txt ./requirements/requirements.in --strip-extras
 ```
 
+It is not recommended to merge the cross-platform dependencies into a single `requirements.txt` file 
+[here](https://github.com/jazzband/pip-tools?tab=readme-ov-file#cross-environment-usage-of-requirementsinrequirementstxt-and-pip-compile).
+Having separate files for different platforms is the best practice.
+
 ## Build and push a new Marqo-base version to Dockerhub
 To release a new version of Marqo-base to Dockerhub:
 
