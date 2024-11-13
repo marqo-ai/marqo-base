@@ -28,9 +28,9 @@ RUN alternatives --set python3 /usr/bin/python3.9 && \
 COPY requirements requirements
 # Install requirements based on the architecture
 RUN if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then \
-      RUN pip3 install --no-cache-dir -r requirements/arm64-requirements.txt; \
+      pip3 install --no-cache-dir -r requirements/arm64-requirements.txt; \
     elif [ "${TARGETPLATFORM}" = "linux/amd64" ]; then \
-      RUN pip3 install --no-cache-dir -r requirements/amd64-gpu-requirements.txt; \
+      pip3 install --no-cache-dir -r requirements/amd64-gpu-requirements.txt; \
     else \
       echo "Unsupported platform: ${TARGETARCH}" && exit 1; \
     fi
