@@ -35,8 +35,6 @@ RUN if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then \
       echo "Unsupported platform: ${TARGETARCH}" && exit 1; \
     fi
 
-
-
 # Setup scripts and execute them
 COPY scripts scripts
 RUN bash scripts/install_redis.sh && \
