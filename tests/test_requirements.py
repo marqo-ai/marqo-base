@@ -49,10 +49,11 @@ class TestRequirements(TestCase):
                     if '==' in line:
                         package, version = line.split('==')
                         package = package.replace('_', '-').lower().strip()
+                        requirements.add(Package(name=package, version=version, markers=markers))
         return requirements
 
     def test_compare_requirements(self):
-        """Compares requirements.txt with requirements-generated.txt and prints differences"""
+        """Compares requirements.txt with generated-requirements.txt and prints differences"""
         req1 = self._parse_requirements(self.requirements)
         req2 = self._parse_requirements(self.generated_requirements)
 
@@ -71,12 +72,12 @@ class TestRequirements(TestCase):
         if only_in_req1 or only_in_req2 or version_mismatches:
             print("Differences found between requirements files:")
             for package in only_in_req1:
-                print(f"Only in requirements.txt: {package.name}=={package.version} {package.markers}")
+                print(f"Only in {self.requirements}: {package.name}=={package.version} {package.markers}")
             for package in only_in_req2:
-                print(f"Only in requirements-generated.txt: {package.name}=={package.version} {package.markers}")
+                print(f"Only in {self.generated_requirements}: {package.name}=={package.version} {package.markers}")
             for package1, package2 in version_mismatches:
-                print(f"Version mismatch for {package1.name}: requirements.txt version: {package1.version}, "
-                      f"requirements-generated.txt version: {package2.version}")
+                print(f"Version mismatch for {package1.name}: {self.requirements} version: {package1.version}, "
+                      f"{self.generated_requirements} version: {package2.version}")
         else:
             print("No differences found between requirements files.")
 
