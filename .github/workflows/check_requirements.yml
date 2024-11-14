@@ -18,9 +18,11 @@ permissions:
   contents: read
 
 jobs:
-  tests:
-    name: Run requirements tests on multiple architectures
-    runs-on: [ubuntu-latest, macos-latest]
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
 
     steps:
       - name: Checkout the repository
@@ -34,7 +36,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pip-tools pytest -y
+          pip install pip-tools pytest
 
       - name: Generate requirements-generated.txt
         run: |
