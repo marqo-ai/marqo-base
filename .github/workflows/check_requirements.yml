@@ -18,9 +18,11 @@ permissions:
   contents: read
 
 jobs:
-  tests:
-    name: Run requirements tests on multiple architectures
-    runs-on: ubuntu-20.04
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
 
     steps:
       - name: Checkout the repository
