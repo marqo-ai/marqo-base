@@ -44,7 +44,8 @@ make
 make install
 cd ..
 # Set PKG_CONFIG_PATH for pkg-config to find the newly installed nv-codec-headers
-export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:${PKG_CONFIG_PATH:-}
+
 # Add /usr/local/lib to the library search path and update the dynamic linker cache
 echo "/usr/local/lib" | tee -a /etc/ld.so.conf
 ldconfig

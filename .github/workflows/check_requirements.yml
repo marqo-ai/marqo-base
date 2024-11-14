@@ -1,0 +1,45 @@
+name: Check the dependencies in requirements.in and requirements.txt
+
+on:
+  workflow_call:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request_target:
+    branches:
+      - main
+
+concurrency:
+  group: check-requirements-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: Run requirements tests on multiple architectures
+    runs-on: [ubuntu-latest, macos-latest]
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pip-tools pytest -y
+
+      - name: Generate requirements-generated.txt
+        run: |
+          pip-compile --output-file=./requirements/generated-requirements.txt ./requirements/requirements.in --strip-extras
+
+      - name: Check if requirements.txt is the same as requirements-generated.txt
+        run: |
+          pytest tests

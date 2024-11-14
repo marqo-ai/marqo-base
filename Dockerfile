@@ -25,8 +25,15 @@ RUN alternatives --set python3 /usr/bin/python3.9 && \
     curl https://bootstrap.pypa.io/get-pip.py | python3
 
 # Install pip dependencies
-COPY requirements.txt requirements.txt
-RUN pip3 install --no-cache-dir -r requirements.txt
+COPY requirements requirements
+# Install requirements based on the architecture
+RUN if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then \
+      pip3 install --no-cache-dir -r requirements/arm64-requirements.txt; \
+    elif [ "${TARGETPLATFORM}" = "linux/amd64" ]; then \
+      pip3 install --no-cache-dir -r requirements/amd64-gpu-requirements.txt; \
+    else \
+      echo "Unsupported platform: ${TARGETARCH}" && exit 1; \
+    fi
 
 # Setup scripts and execute them
 COPY scripts scripts
