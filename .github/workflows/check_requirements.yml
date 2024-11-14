@@ -36,7 +36,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pip-tools pytest -y
+          pip install pip-tools pytest
 
       - name: Generate requirements-generated.txt
         run: |
