@@ -20,7 +20,7 @@ permissions:
 jobs:
   tests:
     name: Run requirements tests on multiple architectures
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
       - name: Checkout the repository
