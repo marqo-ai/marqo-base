@@ -40,7 +40,7 @@ RUN bash scripts/install_onnx_gpu_for_amd.sh && \
 # Install Vespa and pin the version. All versions can be found using `dns list vespa`
 # This is installed as a separate docker layer since we need to upgrade vespa regularly
 RUN dnf config-manager --add-repo https://raw.githubusercontent.com/vespa-engine/vespa/master/dist/vespa-engine.repo && \
-    dnf install -y vespa-8.396.18-1.el8
+    dnf install -y vespa-8.431.32-1.el8
 
 ADD scripts/start_vespa.sh /usr/local/bin/start_vespa.sh
 
