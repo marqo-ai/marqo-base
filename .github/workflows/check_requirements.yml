@@ -5,8 +5,11 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - main  # Trigger when a PR is merged into main
   pull_request:
+    types:
+      - synchronize  # When changes are pushed to a PR targeting main
+      - opened       # When a PR targeting main is created
     branches:
       - main
 
