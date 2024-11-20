@@ -5,7 +5,10 @@ on:
   workflow_dispatch:
   pull_request:
     branches:
-      - main  # Trigger when a PR is merged into main
+      - main
+  push:
+    branches:
+      - main
 
 concurrency:
   group: check-requirements-${{ github.head_ref || github.ref }}
