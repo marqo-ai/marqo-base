@@ -44,7 +44,9 @@ RUN bash scripts/install_redis.sh && \
 RUN if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then \
       bash /scripts/install_ffmpeg.sh; \
     elif [ "${TARGETPLATFORM}" = "linux/amd64" ]; then \
-      bash /scripts/install_ffmpeg_cuda.sh; \
+      bash /scripts/install_ffmpeg_cuda.sh;  \
+      # Choose the java version
+      update-alternatives --set java /usr/lib/jvm/java-17-openjdk-17.0.13.0.11-3.el8.x86_64/bin/java; \
     else \
       echo "Unsupported platform: ${TARGETARCH}" && exit 1; \
     fi
