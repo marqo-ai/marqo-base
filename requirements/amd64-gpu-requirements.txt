@@ -414,7 +414,7 @@ timm==1.0.8
     #   open-clip-torch
 tokenizers==0.19.1
     # via transformers
-torch==1.12.1+cu113 ; platform_machine == "x86_64"
+torch==1.12.1 ; platform_machine == "x86_64"
     # via
     #   -r requirements.in
     #   clip-marqo
@@ -424,9 +424,9 @@ torch==1.12.1+cu113 ; platform_machine == "x86_64"
     #   timm
     #   torchaudio
     #   torchvision
-torchaudio==0.12.1+cu113 ; platform_machine == "x86_64"
+torchaudio==0.12.1 ; platform_machine == "x86_64"
     # via -r requirements.in
-torchvision==0.13.1+cu113 ; platform_machine == "x86_64"
+torchvision==0.13.1 ; platform_machine == "x86_64"
     # via
     #   -r requirements.in
     #   clip-marqo
