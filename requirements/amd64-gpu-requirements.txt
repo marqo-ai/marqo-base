@@ -495,3 +495,6 @@ zipp==3.20.2
     #   -r requirements.in
     #   importlib-metadata
     #   importlib-resources
+hf-transfer==0.1.8
+    # via
+    #   -r requirements.in
