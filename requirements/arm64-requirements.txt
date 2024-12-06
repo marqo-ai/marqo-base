@@ -6,7 +6,7 @@
 #
 --extra-index-url https://download.pytorch.org/whl/cu113
 
-aiohappyeyeballs==2.4.3
+aiohappyeyeballs==2.4.4
     # via aiohttp
 aiohttp==3.10.9
     # via
