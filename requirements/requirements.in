@@ -29,7 +29,7 @@ certifi==2019.11.28
 idna==2.8
 six==1.14.0
 typing-extensions==4.5.0
-urllib3==1.26.16
+urllib3==1.26.19
 timm==1.0.8
 transformers==4.41.2
 einops==0.6.1
