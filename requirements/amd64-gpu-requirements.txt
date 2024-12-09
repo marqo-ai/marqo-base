@@ -8,7 +8,7 @@
 
 aiohappyeyeballs==2.4.4
     # via aiohttp
-aiohttp==3.10.9
+aiohttp==3.10.11
     # via
     #   -r requirements.in
     #   datasets
@@ -126,6 +126,8 @@ h11==0.14.0
     # via
     #   httpcore
     #   uvicorn
+hf-transfer==0.1.8
+    # via -r requirements.in
 httpcore==0.18.0
     # via httpx
 httptools==0.6.1
@@ -276,7 +278,9 @@ platformdirs==4.3.6
 pooch==1.8.2
     # via librosa
 portalocker==2.10.1
-    # via iopath
+    # via
+    #   -r requirements.in
+    #   iopath
 protobuf==3.20.1
     # via
     #   -r requirements.in
@@ -495,6 +499,3 @@ zipp==3.20.2
     #   -r requirements.in
     #   importlib-metadata
     #   importlib-resources
-hf-transfer==0.1.8
-    # via
-    #   -r requirements.in
