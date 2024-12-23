@@ -99,3 +99,6 @@ yarl==1.13.1
 portalocker==2.10.1
 hf-transfer==0.1.8
 sympy==1.13.1  # pinned by torch 2.5.1; https://github.com/pytorch/pytorch/commit/d1027c2be6ad2ee8c9c50fa83293babd05cb6a2c
+aiosignal==1.3.2
+click==8.1.8
+attrs==24.3.0
