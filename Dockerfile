@@ -18,6 +18,7 @@ RUN dnf install -y \
         gcc \
         jq \
         unzip \
+        git \
         tmux
 
 # Set up Python 3.9 and pip
