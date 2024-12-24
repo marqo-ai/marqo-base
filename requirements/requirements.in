@@ -37,7 +37,7 @@ soundfile==0.12.1
 python-magic==0.4.27
 ffmpeg-python==0.2.0
 librosa==0.10.2.post1
-pytorchvideo==0.1.5
+pytorchvideo @ git+https://github.com/facebookresearch/pytorchvideo.git@ae9cfc6
 pydantic==1.10.11
 httpx==0.25.0
 semver==3.0.2

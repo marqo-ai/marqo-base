@@ -14,7 +14,9 @@ aiohttp==3.10.9
     #   datasets
     #   fsspec
 aiosignal==1.3.2
-    # via aiohttp
+    # via
+    #   -r requirements.in
+    #   aiohttp
 anyio==3.7.1
     # via
     #   -r requirements.in
@@ -27,6 +29,7 @@ async-timeout==4.0.3
     #   redis
 attrs==24.3.0
     # via
+    #   -r requirements.in
     #   aiohttp
     #   jsonschema
 audioread==3.0.1
@@ -56,6 +59,7 @@ charset-normalizer==2.1.1
     # via requests
 click==8.1.8
     # via
+    #   -r requirements.in
     #   nltk
     #   uvicorn
 clip-marqo==1.0.2
@@ -358,7 +362,7 @@ python-dotenv==1.0.1
     # via -r requirements.in
 python-magic==0.4.27
     # via -r requirements.in
-pytorchvideo==0.1.5
+pytorchvideo @ git+https://github.com/facebookresearch/pytorchvideo.git@ae9cfc6
     # via -r requirements.in
 pytz==2024.2
     # via pandas
@@ -438,6 +442,7 @@ starlette==0.20.4
     # via fastapi
 sympy==1.13.1
     # via
+    #   -r requirements.in
     #   onnxruntime
     #   onnxruntime-gpu
     #   optimum
