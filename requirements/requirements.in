@@ -98,4 +98,4 @@ zipp==3.20.2
 yarl==1.13.1
 portalocker==2.10.1
 hf-transfer==0.1.8
-starlette==0.45.1
+starlette==0.40.0
