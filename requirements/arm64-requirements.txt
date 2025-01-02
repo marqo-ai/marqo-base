@@ -266,7 +266,7 @@ pooch==1.8.2
     # via librosa
 portalocker==2.10.1
     # via iopath
-protobuf==3.20.2
+protobuf==3.20.1
     # via
     #   -r requirements.in
     #   onnx
