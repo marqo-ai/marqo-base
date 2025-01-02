@@ -279,11 +279,11 @@ nvidia-nvjitlink-cu12==12.4.127
     #   torch
 nvidia-nvtx-cu12==12.4.127
     # via torch
-onnx==1.12.0
+onnx==1.16.2
     # via -r requirements.in
-onnxruntime==1.13.1
+onnxruntime==1.19.2
     # via -r requirements.in
-onnxruntime-gpu==1.12.1 ; platform_machine == "x86_64"
+onnxruntime-gpu==1.19.2 ; platform_machine == "x86_64"
     # via -r requirements.in
 open-clip-torch==2.24.0
     # via -r requirements.in
@@ -323,7 +323,7 @@ portalocker==2.10.1
     # via
     #   -r requirements.in
     #   iopath
-protobuf==3.20.1
+protobuf==3.20.2
     # via
     #   -r requirements.in
     #   onnx
@@ -507,7 +507,6 @@ typing-extensions==4.12.2
     #   iopath
     #   librosa
     #   multidict
-    #   onnx
     #   pydantic
     #   readerwriterlock
     #   starlette
