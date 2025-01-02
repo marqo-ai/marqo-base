@@ -4,7 +4,7 @@ fastapi==0.86.0
 uvicorn==0.31.0
 fastapi-utils==0.2.1
 jsonschema==4.17.1
-redis==4.4.2
+redis==4.4.4
 more_itertools==10.4.0
 boto3==1.25.4
 botocore==1.28.4
@@ -15,7 +15,7 @@ validators==0.20.0
 sentence-transformers==2.2.2
 open_clip_torch==2.24.0
 clip-marqo==1.0.2
-protobuf==3.20.1
+protobuf==3.20.2
 onnx==1.12.0
 onnxruntime==1.13.1
 pandas==1.5.1
@@ -25,11 +25,11 @@ psutil==5.9.4
 multilingual-clip==1.0.10
 safetensors==0.4.1
 flatbuffers==23.5.9
-certifi==2019.11.28
+certifi==2023.7.22
 idna==2.8
 six==1.14.0
 typing-extensions==4.5.0
-urllib3==1.26.16
+urllib3==1.26.17
 timm==1.0.8
 transformers==4.41.2
 einops==0.6.1
