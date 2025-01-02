@@ -381,7 +381,7 @@ soxr==0.3.7
     #   librosa
 sqlalchemy==1.4.54
     # via fastapi-utils
-starlette==0.40.0
+starlette==0.41.3
     # via fastapi
 sympy==1.13.3
     # via
