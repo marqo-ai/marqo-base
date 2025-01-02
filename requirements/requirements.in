@@ -50,6 +50,7 @@ kazoo==2.10.0
 pycurl==7.45.3
 huggingface-hub==0.25.0
 jinja2==3.1.4
+hf-transfer==0.1.8
 
 # AMD Specific packages
 --extra-index-url https://download.pytorch.org/whl/cu113
@@ -97,5 +98,3 @@ websockets==13.1
 zipp==3.20.2
 yarl==1.13.1
 portalocker==2.10.1
-hf-transfer==0.1.8
-starlette==0.40.0
