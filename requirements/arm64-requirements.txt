@@ -438,7 +438,7 @@ transformers==4.41.2
     #   multilingual-clip
     #   optimum
     #   sentence-transformers
-typing-extensions==4.5.0
+typing-extensions==4.8.0
     # via
     #   -r requirements.in
     #   huggingface-hub
