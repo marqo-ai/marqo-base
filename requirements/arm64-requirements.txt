@@ -242,7 +242,7 @@ onnx==1.16.2
     # via -r requirements.in
 onnxruntime==1.19.2
     # via -r requirements.in
-open-clip-torch==2.24.0
+open-clip-torch==2.29.0
     # via -r requirements.in
 opencv-python-headless==4.6.0.66
     # via -r requirements.in
@@ -284,7 +284,6 @@ protobuf==3.20.2
     #   -r requirements.in
     #   onnx
     #   onnxruntime
-    #   open-clip-torch
     #   transformers
 psutil==5.9.4
     # via
@@ -352,6 +351,7 @@ s3transfer==0.6.2
 safetensors==0.4.1
     # via
     #   -r requirements.in
+    #   open-clip-torch
     #   timm
     #   transformers
 scikit-learn==1.3.2
@@ -371,7 +371,6 @@ sentence-transformers==2.2.2
     # via -r requirements.in
 sentencepiece==0.2.0
     # via
-    #   open-clip-torch
     #   sentence-transformers
     #   transformers
 six==1.14.0
