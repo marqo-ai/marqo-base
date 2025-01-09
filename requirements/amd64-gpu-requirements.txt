@@ -81,7 +81,7 @@ einops==0.6.1
     # via -r requirements.in
 exceptiongroup==1.2.2
     # via anyio
-fastapi==0.115.6
+fastapi==0.86.0
     # via
     #   -r requirements.in
     #   fastapi-utils
@@ -393,7 +393,7 @@ soxr==0.3.7
     #   librosa
 sqlalchemy==1.4.54
     # via fastapi-utils
-starlette==0.41.3
+strlette==0.20.4
     # via fastapi
 sympy==1.13.3
     # via
