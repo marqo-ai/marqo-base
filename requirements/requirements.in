@@ -25,7 +25,7 @@ psutil==5.9.4
 multilingual-clip==1.0.10
 safetensors==0.4.1
 flatbuffers==23.5.9
-certifi==2023.7.22
+certifi==2024.7.4
 idna==2.8
 six==1.14.0
 typing-extensions==4.8.0
