@@ -40,7 +40,7 @@ RUN if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then \
 COPY scripts scripts
 RUN bash scripts/install_redis.sh && \
     bash scripts/install_punkt_tokenizers.sh && \
-    bash scripts/install_ffmpeg.sh \
+    bash scripts/install_ffmpeg.sh
 
 # Install ffmpeg based on the architecture
 #RUN if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then \
