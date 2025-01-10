@@ -18,6 +18,7 @@ RUN dnf install -y \
         gcc \
         jq \
         unzip \
+        git \
         tmux
 
 # Set up Python 3.9 and pip
@@ -38,23 +39,24 @@ RUN if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then \
 # Setup scripts and execute them
 COPY scripts scripts
 RUN bash scripts/install_redis.sh && \
-    bash scripts/install_punkt_tokenizers.sh
+    bash scripts/install_punkt_tokenizers.sh && \
+    bash scripts/install_ffmpeg.sh
 
 # Install ffmpeg based on the architecture
-RUN if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then \
-      bash /scripts/install_ffmpeg.sh; \
-    elif [ "${TARGETPLATFORM}" = "linux/amd64" ]; then \
-      bash /scripts/install_ffmpeg_cuda.sh;  \
-      # Choose the java version
-      update-alternatives --set java /usr/lib/jvm/java-17-openjdk-17.0.13.0.11-3.el8.x86_64/bin/java; \
-    else \
-      echo "Unsupported platform: ${TARGETARCH}" && exit 1; \
-    fi
+#RUN if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then \
+#      bash /scripts/install_ffmpeg.sh; \
+#    elif [ "${TARGETPLATFORM}" = "linux/amd64" ]; then \
+#      bash /scripts/install_ffmpeg_cuda.sh;  \
+#      # Choose the java version
+#      update-alternatives --set java /usr/lib/jvm/java-17-openjdk-17.0.13.0.11-3.el8.x86_64/bin/java; \
+#    else \
+#      echo "Unsupported platform: ${TARGETARCH}" && exit 1; \
+#    fi
 
 # Install Vespa and pin the version. All versions can be found using `dns list vespa`
 # This is installed as a separate docker layer since we need to upgrade vespa regularly
 RUN dnf config-manager --add-repo https://raw.githubusercontent.com/vespa-engine/vespa/master/dist/vespa-engine.repo && \
-    dnf install -y vespa-8.431.32-1.el8
+    dnf install -y vespa-8.427.34-1.el8
 
 ADD scripts/start_vespa.sh /usr/local/bin/start_vespa.sh
 

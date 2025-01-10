@@ -4,7 +4,7 @@
 #
 #    pip-compile --output-file=arm64-requirements.txt --strip-extras requirements.in
 #
---extra-index-url https://download.pytorch.org/whl/cu113
+--extra-index-url https://download.pytorch.org/whl/cu124
 
 aiohappyeyeballs==2.4.4
     # via aiohttp
@@ -14,7 +14,9 @@ aiohttp==3.10.9
     #   datasets
     #   fsspec
 aiosignal==1.3.2
-    # via aiohttp
+    # via
+    #   -r requirements.in
+    #   aiohttp
 anyio==3.7.1
     # via
     #   -r requirements.in
@@ -27,6 +29,7 @@ async-timeout==4.0.3
     #   redis
 attrs==24.3.0
     # via
+    #   -r requirements.in
     #   aiohttp
     #   jsonschema
 audioread==3.0.1
@@ -56,6 +59,7 @@ charset-normalizer==2.1.1
     # via requests
 click==8.1.8
     # via
+    #   -r requirements.in
     #   nltk
     #   uvicorn
 clip-marqo==1.0.2
@@ -90,6 +94,7 @@ filelock==3.16.1
     # via
     #   datasets
     #   huggingface-hub
+    #   torch
     #   transformers
 flatbuffers==23.5.9
     # via
@@ -105,6 +110,7 @@ fsspec==2024.3.1
     #   -r requirements.in
     #   datasets
     #   huggingface-hub
+    #   torch
 ftfy==6.2.3
     # via
     #   -r requirements.in
@@ -120,6 +126,8 @@ h11==0.14.0
     # via
     #   httpcore
     #   uvicorn
+hf-transfer==0.1.8
+    # via -r requirements.in
 httpcore==0.18.0
     # via httpx
 httptools==0.6.1
@@ -154,7 +162,9 @@ iopath==0.1.10
     #   fvcore
     #   pytorchvideo
 jinja2==3.1.4
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   torch
 jmespath==1.0.1
     # via
     #   boto3
@@ -200,6 +210,7 @@ networkx==3.1
     # via
     #   -r requirements.in
     #   pytorchvideo
+    #   torch
 nltk==3.9.1
     # via
     #   -r requirements.in
@@ -227,11 +238,11 @@ numpy==1.23.4
     #   soxr
     #   torchvision
     #   transformers
-onnx==1.12.0
+onnx==1.16.2
     # via -r requirements.in
-onnxruntime==1.13.1
+onnxruntime==1.19.2
     # via -r requirements.in
-open-clip-torch==2.24.0
+open-clip-torch==2.29.0
     # via -r requirements.in
 opencv-python-headless==4.6.0.66
     # via -r requirements.in
@@ -265,13 +276,14 @@ platformdirs==4.3.6
 pooch==1.8.2
     # via librosa
 portalocker==2.10.1
-    # via iopath
-protobuf==3.20.1
+    # via
+    #   -r requirements.in
+    #   iopath
+protobuf==3.20.2
     # via
     #   -r requirements.in
     #   onnx
     #   onnxruntime
-    #   open-clip-torch
     #   transformers
 psutil==5.9.4
     # via
@@ -304,7 +316,7 @@ python-dotenv==1.0.1
     # via -r requirements.in
 python-magic==0.4.27
     # via -r requirements.in
-pytorchvideo==0.1.5
+pytorchvideo @ git+https://github.com/facebookresearch/pytorchvideo.git@ae9cfc6
     # via -r requirements.in
 pytz==2024.2
     # via pandas
@@ -333,13 +345,13 @@ requests==2.28.1
     #   datasets
     #   huggingface-hub
     #   pooch
-    #   torchvision
     #   transformers
 s3transfer==0.6.2
     # via boto3
 safetensors==0.4.1
     # via
     #   -r requirements.in
+    #   open-clip-torch
     #   timm
     #   transformers
 scikit-learn==1.3.2
@@ -359,7 +371,6 @@ sentence-transformers==2.2.2
     # via -r requirements.in
 sentencepiece==0.2.0
     # via
-    #   open-clip-torch
     #   sentence-transformers
     #   transformers
 six==1.14.0
@@ -383,10 +394,12 @@ sqlalchemy==1.4.54
     # via fastapi-utils
 starlette==0.20.4
     # via fastapi
-sympy==1.13.3
+sympy==1.13.1
     # via
+    #   -r requirements.in
     #   onnxruntime
     #   optimum
+    #   torch
 tabulate==0.9.0
     # via fvcore
 termcolor==2.4.0
@@ -401,7 +414,7 @@ timm==1.0.8
     #   open-clip-torch
 tokenizers==0.19.1
     # via transformers
-torch==1.12.1 ; platform_machine == "arm64" or platform_machine == "aarch64"
+torch==2.5.1 ; platform_machine == "arm64" or platform_machine == "aarch64"
     # via
     #   -r requirements.in
     #   clip-marqo
@@ -411,9 +424,9 @@ torch==1.12.1 ; platform_machine == "arm64" or platform_machine == "aarch64"
     #   timm
     #   torchaudio
     #   torchvision
-torchaudio==0.12.1 ; platform_machine == "arm64" or platform_machine == "aarch64"
+torchaudio==2.5.1 ; platform_machine == "arm64" or platform_machine == "aarch64"
     # via -r requirements.in
-torchvision==0.13.1 ; platform_machine == "arm64" or platform_machine == "aarch64"
+torchvision==0.20.1 ; platform_machine == "arm64" or platform_machine == "aarch64"
     # via
     #   -r requirements.in
     #   clip-marqo
@@ -438,19 +451,17 @@ transformers==4.41.2
     #   multilingual-clip
     #   optimum
     #   sentence-transformers
-typing-extensions==4.8.0
+typing-extensions==4.12.2
     # via
     #   -r requirements.in
     #   huggingface-hub
     #   iopath
     #   librosa
     #   multidict
-    #   onnx
     #   pydantic
     #   readerwriterlock
     #   starlette
     #   torch
-    #   torchvision
     #   uvicorn
 urllib3==1.26.17
     # via
@@ -482,6 +493,3 @@ zipp==3.20.2
     #   -r requirements.in
     #   importlib-metadata
     #   importlib-resources
-hf-transfer==0.1.8
-    # via
-    #   -r requirements.in
