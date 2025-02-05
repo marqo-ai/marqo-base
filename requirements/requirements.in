@@ -99,3 +99,6 @@ websockets==13.1
 zipp==3.20.2
 yarl==1.13.1
 portalocker==2.10.1
+attrs==24.3.0
+pytz==2024.2
+filelock==3.16.1
