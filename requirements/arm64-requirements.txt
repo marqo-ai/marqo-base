@@ -485,3 +485,6 @@ zipp==3.20.2
 hf-transfer==0.1.8
     # via
     #   -r requirements.in
+orjson==3.10.14
+    # via
+    #   -r requirements.in
