@@ -49,7 +49,7 @@ readerwriterlock==1.0.9
 kazoo==2.10.0
 pycurl==7.45.3
 huggingface-hub==0.25.0
-jinja2==3.1.4
+jinja2==3.1.6
 hf-transfer==0.1.8
 orjson==3.10.15
 
