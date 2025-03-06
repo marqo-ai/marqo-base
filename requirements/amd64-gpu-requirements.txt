@@ -27,6 +27,7 @@ async-timeout==4.0.3
     #   redis
 attrs==24.3.0
     # via
+    #   -r requirements.in
     #   aiohttp
     #   jsonschema
 audioread==3.0.1
@@ -91,6 +92,7 @@ ffmpeg-python==0.2.0
     # via -r requirements.in
 filelock==3.16.1
     # via
+    #   -r requirements.in
     #   datasets
     #   huggingface-hub
     #   transformers
@@ -126,6 +128,8 @@ h11==0.14.0
     # via
     #   httpcore
     #   uvicorn
+hf-transfer==0.1.8
+    # via -r requirements.in
 httpcore==0.18.0
     # via httpx
 httptools==0.6.1
@@ -159,7 +163,7 @@ iopath==0.1.10
     # via
     #   fvcore
     #   pytorchvideo
-jinja2==3.1.4
+jinja2==3.1.6
     # via -r requirements.in
 jmespath==1.0.1
     # via
@@ -247,6 +251,8 @@ opencv-python-headless==4.6.0.66
     # via -r requirements.in
 optimum==1.20.0
     # via -r requirements.in
+orjson==3.10.15
+    # via -r requirements.in
 packaging==24.1
     # via
     #   -r requirements.in
@@ -276,7 +282,9 @@ platformdirs==4.3.6
 pooch==1.8.2
     # via librosa
 portalocker==2.10.1
-    # via iopath
+    # via
+    #   -r requirements.in
+    #   iopath
 protobuf==3.20.1
     # via
     #   -r requirements.in
@@ -319,7 +327,9 @@ python-magic==0.4.27
 pytorchvideo==0.1.5
     # via -r requirements.in
 pytz==2024.2
-    # via pandas
+    # via
+    #   -r requirements.in
+    #   pandas
 pyyaml==6.0.2
     # via
     #   datasets
@@ -495,9 +505,3 @@ zipp==3.20.2
     #   -r requirements.in
     #   importlib-metadata
     #   importlib-resources
-hf-transfer==0.1.8
-    # via
-    #   -r requirements.in
-orjson==3.10.15
-    # via
-    #   -r requirements.in
