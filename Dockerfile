@@ -52,20 +52,6 @@ RUN if [ "${TARGETPLATFORM}" = "linux/arm64" ]; then \
       echo "Unsupported platform: ${TARGETARCH}" && exit 1; \
     fi
 
-# Install Vespa and pin the version. All versions can be found using `dns list vespa`
-# This is installed as a separate docker layer since we need to upgrade vespa regularly
-RUN dnf config-manager --add-repo https://raw.githubusercontent.com/vespa-engine/vespa/master/dist/vespa-engine.repo && \
-    dnf install -y vespa-8.513.17-1.el8
-
-ADD scripts/start_vespa.sh /usr/local/bin/start_vespa.sh
-
-# Set Envs for Vespa
-ENV PATH="/opt/vespa/bin:/opt/vespa-deps/bin:${PATH}"
-# TODO check if following env vars are required
-ENV VESPA_LOG_STDOUT="true"
-ENV VESPA_LOG_FORMAT="vespa"
-ENV VESPA_CLI_HOME=/tmp/.vespa
-ENV VESPA_CLI_CACHE_DIR=/tmp/.cache/vespa
 ENV NVIDIA_DRIVER_CAPABILITIES=utility,compute,video
 # expose nltk data to all users
 ENV NLTK_DATA=/root/nltk_data
